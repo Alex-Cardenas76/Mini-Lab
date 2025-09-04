@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Sistema de Gestión Fotográfica</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/index.css" >
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../assets/js/index.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Menú barra superior móvil -->
+        <button id="pd-menu-toggle" class="pd-menu-toggle">
+            <span class="pd-menu-icon"></span>
+        </button>
+        <div id="pd-topbar-menu" class="pd-topbar-menu">
+            <div class="pd-topbar-menu-content">
+                <button id="pd-menu-close" class="pd-menu-close"><i class="fas fa-times"></i></button>
+                <div class="pd-logo">FotoStudio</div>
+                <nav class="pd-nav-menu">
+                    <ul>
+                        <li><a href="index.html" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="pedidos.html"><i class="fas fa-receipt"></i> Pedidos</a></li>
+                        <li><a href="clientes.html"><i class="fas fa-users"></i> Clientes</a></li>
+                        <li><a href="contratos.html"><i class="fas fa-file-signature"></i> Contratos</a></li>
+                        <li><a href="inventario.html"><i class="fas fa-boxes"></i> Inventario</a></li>
+                        <li><a href="orden-produccion.html"><i class="fas fa-cogs"></i> Orden de Producción</a></li>
+                        <li><a href="productos-terminados.html"><i class="fas fa-cogs"></i> Productos Terminados</a></li>
+                        <li><a href="agenda.html"><i class="fas fa-calendar-alt"></i> Agenda</a></li>
+                        <li><a href="reportes.html"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+                        <li><a href="configuracion.html"><i class="fas fa-cogs"></i> Configuración</a></li>
+                        <li><a href="login.html"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- Menú lateral -->
+        <div class="sidebar">
+            <div class="logo">FotoStudio</div>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="nav-item"><a href="index.html" class="nav-link active"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="pedidos.html" class="nav-link"><i class="fas fa-receipt"></i><span>Pedidos</span></a></li>
+                    <li class="nav-item"><a href="clientes.html" class="nav-link"><i class="fas fa-users"></i><span>Clientes</span></a></li>
+                    <li class="nav-item"><a href="contratos.html" class="nav-link"><i class="fas fa-file-signature"></i><span>Contratos</span></a></li>
+                    <li class="nav-item"><a href="inventario.html" class="nav-link"><i class="fas fa-boxes"></i><span>Inventario</span></a></li>
+                    <li class="nav-item"><a href="orden-produccion.html" class="nav-link"><i class="fas fa-cogs"></i><span>Orden de Producción</span></a></li>
+                    <li class="nav-item"><a href="productos-terminados.html" class="nav-link "><i class="fas fa-box"></i><span>Productos Terminados</span></a></li>
+                    <li class="nav-item"><a href="agenda.html" class="nav-link"><i class="fas fa-calendar-alt"></i><span>Agenda</span></a></li>
+                    <li class="nav-item"><a href="reportes.html" class="nav-link"><i class="fas fa-chart-bar"></i><span>Reportes</span></a></li>
+                    <li class="nav-item"><a href="configuracion.html" class="nav-link"><i class="fas fa-cogs"></i><span>Configuración</span></a></li>
+                    <li class="nav-item"><a href="login.html" class="nav-link"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main-content">
+            <div class="header">
+                <h1>Dashboard</h1>
+                <div class="user-info">
+                    <span>Bienvenido, Administrador</span>
+                </div>
+            </div>
+
+            <!-- Tarjetas de estadísticas -->
+            <div class="dashboard-cards">
+                <div class="card status-card new">
+                    <h3>Pedidos Nuevos</h3>
+                    <div class="number">12</div>
+                    <a href="pedidos.html" class="btn btn-sm btn-primary">Ver detalles</a>
+                </div>
+                <div class="card status-card in-progress">
+                    <h3>Orden de Producción</h3>
+                    <div class="number">8</div>
+                    <a href="orden-produccion.html" class="btn btn-sm btn-primary">Ver detalles</a>
+                </div>
+                <div class="card status-card completed">
+                    <h3>Entregados</h3>
+                    <div class="number">25</div>
+                    <a href="pedidos.html" class="btn btn-sm btn-primary">Ver detalles</a>
+                </div>
+                <div class="card status-card alert">
+                    <h3>Stock Bajo</h3>
+                    <div class="number">3</div>
+                    <a href="inventario.html" class="btn btn-sm btn-primary">Ver detalles</a>
+                </div>
+            </div>
+
+            <!-- Alertas -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Alertas de Inventario</h2>
+                </div>
+                <div class="alert alert-danger">
+                    <strong>Stock Bajo:</strong> Papel fotográfico 10x15 (5 unidades restantes)
+                </div>
+                <div class="alert alert-warning">
+                    <strong>Stock Bajo:</strong> Químico Revelador (2 litros restantes)
+                </div>
+                <div class="alert alert-danger">
+                    <strong>Stock Bajo:</strong> Varillas de Marco Tipo A (3 unidades restantes)
+                </div>
+            </div>
+
+             <!-- Sección de Reportes -->
+             <div class="reports-container">
+                <!-- Reporte Financiero -->
+                <div class="report-section" id="financial-report">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Ingresos por Servicio</h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="services-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    
+
+            <!-- Pedidos recientes -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Pedidos Recientes</h2>
+                    <a href="pedidos.html" class="btn btn-sm-btn-primary">Ver todos</a>
+                </div>
+                <div class="table-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Tipo</th>
+                                <th>Servicio</th>
+                                <th>Estado</th>
+                                <th>Fecha</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Juan Pérez</td>
+                                <td>Particular</td>
+                                <td>Impresión Minilab</td>
+                                <td><span class="badge badge-info">Nuevo</span></td>
+                                <td>15/04/2023</td>
+                                <td class="actions">
+                                    <a href="#" class="btn btn-sm btn-ver" data-id="1"><i class='fas fa-eye'></i></a>
+                                    <a href="#" class="btn btn-sm btn-editar" data-id="1"><i class='fas fa-edit'></i></a>
+                                    <button class='eliminar-btn' ><i class='fas fa-trash'></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>María López</td>
+                                <td>Particular</td>
+                                <td>Enmarcado</td>
+                                <td><span class="badge badge-warning">Producción</span></td>
+                                <td>12/04/2023</td>
+                                <td class="actions">
+                                    <a href="#" class="btn btn-sm btn-ver" data-id="2"><i class='fas fa-eye'></i></a>
+                                    <a href="#" class="btn btn-sm btn-editar" data-id="2"><i class='fas fa-edit'></i></a>
+                                    <button class='eliminar-btn' ><i class='fas fa-trash'></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Valentina Olivos</td>
+                                <td>Colegio</td>
+                                <td>Recordatorio Escolar</td>
+                                <td><span class="badge badge-warning">Producción</span></td>
+                                <td>10/04/2023</td>
+                                <td class="actions">
+                                    <a href="#" class="btn btn-sm btn-ver" data-id="3"><i class='fas fa-eye'></i></a>
+                                    <a href="#" class="btn btn-sm btn-editar" data-id="3"><i class='fas fa-edit'></i></a>
+                                    <button class='eliminar-btn' ><i class='fas fa-trash'></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Arlond Villareal</td>
+                                <td>Colegio</td>
+                                <td>Retoque Fotográfico</td>
+                                <td><span class="badge badge-success">Entregado</span></td>
+                                <td>08/04/2023</td>
+                                <td class="actions">
+                                    <a href="#" class="btn btn-sm btn-ver" data-id="4"><i class='fas fa-eye'></i></a>
+                                    <a href="#" class="btn btn-sm btn-editar" data-id="4"><i class='fas fa-edit'></i></a>
+                                    <button class='eliminar-btn' ><i class='fas fa-trash'></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../assets/js/index.js"></script>
+</html> 

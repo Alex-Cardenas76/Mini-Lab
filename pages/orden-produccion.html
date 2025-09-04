@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Orden de Producción</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <link rel="stylesheet" href="../assets/css/styles.css" />
+  <link rel="stylesheet" href="../assets/css/orden-produccion.css" />
+ 
+</head>
+<body>
+   <!-- Botón de menú hamburguesa para móvil -->
+   <button class="menu-toggle" id="menuToggle">
+    <span class="menu-icon"></span>
+</button>
+
+  <div class="sidebar">
+    <div class="logo">FotoStudio</div>
+    <nav class="nav-menu">
+      <ul>
+        <li class="nav-item"><a href="index.html" class="nav-link"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li class="nav-item"><a href="pedidos.html" class="nav-link"><i class="fas fa-receipt"></i><span>Pedidos</span></a></li>
+        <li class="nav-item"><a href="clientes.html" class="nav-link"><i class="fas fa-users"></i><span>Clientes</span></a></li>
+        <li class="nav-item"><a href="contratos.html" class="nav-link"><i class="fas fa-file-signature"></i><span>Contratos</span></a></li>
+        <li class="nav-item"><a href="inventario.html" class="nav-link"><i class="fas fa-boxes"></i><span>Inventario</span></a></li>
+        <li class="nav-item"><a href="orden-produccion.html" class="nav-link active"><i class="fas fa-cogs"></i><span>Orden de Producción</span></a></li>
+        <li class="nav-item"><a href="productos-terminados.html" class="nav-link "><i class="fas fa-box"></i><span>Productos Terminados</span></a></li>
+        <li class="nav-item"><a href="agenda.html" class="nav-link"><i class="fas fa-calendar-alt"></i><span>Agenda</span></a></li>
+        <li class="nav-item"><a href="reportes.html" class="nav-link"><i class="fas fa-chart-bar"></i><span>Reportes</span></a></li>
+        <li class="nav-item"><a href="configuracion.html" class="nav-link"><i class="fas fa-cogs"></i><span>Configuración</span></a></li>
+        <li class="nav-item"><a href="login.html" class="nav-link"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="orden-container">
+    <div class="orden-title">Orden de Producción</div>
+    <div class="tabs" id="tabsNav">
+      <button class="tab-btn tab-azul active" onclick="mostrarTab(0)"><i class="fas fa-cogs"></i> Producción Interna</button>
+      <button class="tab-btn tab-verde" onclick="mostrarTab(1)"><i class="fas fa-vector-square"></i> Enmarcado</button>
+      <button class="tab-btn tab-naranja" onclick="mostrarTab(2)"><i class="fas fa-print"></i> Minilab</button>
+      <button class="tab-btn tab-violeta" onclick="mostrarTab(3)"><i class="fas fa-graduation-cap"></i> Recordatorios</button>
+      <button class="tab-btn tab-rojo" onclick="mostrarTab(4)"><i class="fas fa-magic"></i> Retoque Digital</button>
+      <button class="tab-btn tab-marron" onclick="mostrarTab(5)"><i class="fas fa-paint-brush"></i> Pintura al Óleo</button>
+      <button class="tab-btn tab-turquesa" onclick="mostrarTab(6)"><i class="fas fa-layer-group"></i> Edición Gráfica</button>
+    </div>
+    <div class="tab-content active" id="tab0">
+      <div class="tab-desc">En esta sección puedes gestionar y registrar la producción interna de marcos y productos propios del taller, controlando materiales y mermas.</div>
+      <div class="tab-actions" style="display:flex; gap:10px; margin-bottom:10px;">
+        <button class="btn-agregar" onclick="abrirModalReceta('interna')" style="background:#1976d2;"><i class="fas fa-utensils"></i> Registrar Receta</button>
+      </div>
+      <div class="filtro-busqueda">
+        <input type="text" placeholder="Buscar..." oninput="filtrarTabla('interna', this.value)">
+        <span class="icono-busqueda"><i class="fas fa-search"></i></span>
+      </div>
+      <table class="tabla-registro" id="tablaInterna">
+        <thead>
+          <tr>
+            <th style="width:40px;"></th>
+            <th>ID</th>
+            <th>Producto Terminado</th>
+            <th>Materiales Usados</th>
+            <th>Mermas</th>
+            <th>Acciones</th>
+            <th>Inventario</th>
+            <th>Estado Envío</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="enviar-masivo-bar">
+        <button class="btn-enviar-masivo" id="btnEnviar-interna" onclick="enviarSeleccionados('interna')" disabled>
+          <i class="fas fa-paper-plane"></i> Enviar seleccionados a Productos Terminados
+        </button>
+      </div>
+      <div class="paginacion" id="paginacionInterna"></div>
+    </div>
+    <div class="tab-content" id="tab1">
+      <div class="tab-desc">Aquí se administran los procesos de enmarcado, permitiendo llevar el control de materiales y registrar cada cuadro realizado.</div>
+      <div class="tab-actions" style="display:flex; gap:10px; margin-bottom:10px;">
+        <button class="btn-agregar" onclick="abrirModalReceta('enmarcado')" style="background:#1976d2;"><i class="fas fa-utensils"></i> Registrar Receta</button>
+      </div>
+      <div class="filtro-busqueda">
+        <input type="text" placeholder="Buscar..." oninput="filtrarTabla('enmarcado', this.value)">
+        <span class="icono-busqueda"><i class="fas fa-search"></i></span>
+      </div>
+      <table class="tabla-registro" id="tablaEnmarcado">
+        <thead>
+          <tr>
+            <th style="width:40px;"></th>
+            <th>ID</th>
+            <th>Producto Terminado</th>
+            <th>Materiales Usados</th>
+            <th>Mermas</th>
+            <th>Acciones</th>
+            <th>Inventario</th>
+            <th>Estado Envío</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="enviar-masivo-bar">
+        <button class="btn-enviar-masivo" id="btnEnviar-enmarcado" onclick="enviarSeleccionados('enmarcado')" disabled>
+          <i class="fas fa-paper-plane"></i> Enviar seleccionados a Productos Terminados
+        </button>
+      </div>
+      <div class="paginacion" id="paginacionEnmarcado"></div>
+    </div>
+    <div class="tab-content" id="tab2">
+      <div class="tab-desc">Gestiona la producción de impresiones fotográficas en minilab, controlando insumos y pedidos impresos.</div>
+      <div class="tab-actions" style="display:flex; gap:10px; margin-bottom:10px;">
+        <button class="btn-agregar" onclick="abrirModalReceta('minilab')" style="background:#1976d2;"><i class="fas fa-utensils"></i> Registrar Receta</button>
+      </div>
+      <div class="filtro-busqueda">
+        <input type="text" placeholder="Buscar..." oninput="filtrarTabla('minilab', this.value)">
+        <span class="icono-busqueda"><i class="fas fa-search"></i></span>
+      </div>
+      <table class="tabla-registro" id="tablaMinilab">
+        <thead>
+          <tr>
+            <th style="width:40px;"></th>
+            <th>ID</th>
+            <th>Producto Terminado</th>
+            <th>Materiales Usados</th>
+            <th>Mermas</th>
+            <th>Acciones</th>
+            <th>Inventario</th>
+            <th>Estado Envío</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="enviar-masivo-bar">
+        <button class="btn-enviar-masivo" id="btnEnviar-minilab" onclick="enviarSeleccionados('minilab')" disabled>
+          <i class="fas fa-paper-plane"></i> Enviar seleccionados a Productos Terminados
+        </button>
+      </div>
+      <div class="paginacion" id="paginacionMinilab"></div>
+    </div>
+    <div class="tab-content" id="tab3">
+      <div class="tab-desc">Registra y administra la elaboración de recordatorios escolares, comuniones y otros eventos especiales.</div>
+      <div class="tab-actions" style="display:flex; gap:10px; margin-bottom:10px;">
+        <button class="btn-agregar" onclick="abrirModalReceta('recordatorio')" style="background:#1976d2;"><i class="fas fa-utensils"></i> Registrar Receta</button>
+      </div>
+      <div class="filtro-busqueda">
+        <input type="text" placeholder="Buscar..." oninput="filtrarTabla('recordatorio', this.value)">
+        <span class="icono-busqueda"><i class="fas fa-search"></i></span>
+      </div>
+      <table class="tabla-registro" id="tablaRecordatorio">
+        <thead>
+          <tr>
+            <th style="width:40px;"></th>
+            <th>ID</th>
+            <th>Producto Terminado</th>
+            <th>Materiales Usados</th>
+            <th>Mermas</th>
+            <th>Acciones</th>
+            <th>Inventario</th>
+            <th>Estado Envío</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="enviar-masivo-bar">
+        <button class="btn-enviar-masivo" id="btnEnviar-recordatorio" onclick="enviarSeleccionados('recordatorio')" disabled>
+          <i class="fas fa-paper-plane"></i> Enviar seleccionados a Productos Terminados
+        </button>
+      </div>
+      <div class="paginacion" id="paginacionRecordatorio"></div>
+    </div>
+    <div class="tab-content" id="tab4">
+      <div class="tab-desc">Controla y documenta los trabajos de retoque digital realizados sobre fotografías y archivos gráficos.</div>
+      <div class="tab-actions" style="display:flex; gap:10px; margin-bottom:10px;">
+        <button class="btn-agregar" onclick="abrirModalReceta('retoque')" style="background:#1976d2;"><i class="fas fa-utensils"></i> Registrar Receta</button>
+      </div>
+      <div class="filtro-busqueda">
+        <input type="text" placeholder="Buscar..." oninput="filtrarTabla('retoque', this.value)">
+        <span class="icono-busqueda"><i class="fas fa-search"></i></span>
+      </div>
+      <table class="tabla-registro" id="tablaRetoque">
+        <thead>
+          <tr>
+            <th style="width:40px;"></th>
+            <th>ID</th>
+            <th>Producto Terminado</th>
+            <th>Materiales Usados</th>
+            <th>Mermas</th>
+            <th>Acciones</th>
+            <th>Inventario</th>
+            <th>Estado Envío</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="enviar-masivo-bar">
+        <button class="btn-enviar-masivo" id="btnEnviar-retoque" onclick="enviarSeleccionados('retoque')" disabled>
+          <i class="fas fa-paper-plane"></i> Enviar seleccionados a Productos Terminados
+        </button>
+      </div>
+      <div class="paginacion" id="paginacionRetoque"></div>
+    </div>
+    <div class="tab-content" id="tab5">
+      <div class="tab-desc">Administra la producción de pinturas al óleo, desde el uso de materiales hasta el registro de cada obra terminada.</div>
+      <div class="tab-actions" style="display:flex; gap:10px; margin-bottom:10px;">
+        <button class="btn-agregar" onclick="abrirModalReceta('oleo')" style="background:#1976d2;"><i class="fas fa-utensils"></i> Registrar Receta</button>
+      </div>
+      <div class="filtro-busqueda">
+        <input type="text" placeholder="Buscar..." oninput="filtrarTabla('oleo', this.value)">
+        <span class="icono-busqueda"><i class="fas fa-search"></i></span>
+      </div>
+      <table class="tabla-registro" id="tablaOleo">
+        <thead>
+          <tr>
+            <th style="width:40px;"></th>
+            <th>ID</th>
+            <th>Producto Terminado</th>
+            <th>Materiales Usados</th>
+            <th>Mermas</th>
+            <th>Acciones</th>
+            <th>Inventario</th>
+            <th>Estado Envío</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="enviar-masivo-bar">
+        <button class="btn-enviar-masivo" id="btnEnviar-oleo" onclick="enviarSeleccionados('oleo')" disabled>
+          <i class="fas fa-paper-plane"></i> Enviar seleccionados a Productos Terminados
+        </button>
+      </div>
+      <div class="paginacion" id="paginacionOleo"></div>
+    </div>
+    <div class="tab-content" id="tab6">
+      <div class="tab-desc">Gestiona los procesos de edición gráfica, montajes y trabajos especiales realizados en el estudio.</div>
+      <div class="tab-actions" style="display:flex; gap:10px; margin-bottom:10px;">
+        <button class="btn-agregar" onclick="abrirModalReceta('edicion')" style="background:#1976d2;"><i class="fas fa-utensils"></i> Registrar Receta</button>
+      </div>
+      <div class="filtro-busqueda">
+        <input type="text" placeholder="Buscar..." oninput="filtrarTabla('edicion', this.value)">
+        <span class="icono-busqueda"><i class="fas fa-search"></i></span>
+      </div>
+      <table class="tabla-registro" id="tablaEdicion">
+        <thead>
+          <tr>
+            <th style="width:40px;"></th>
+            <th>ID</th>
+            <th>Producto Terminado</th>
+            <th>Materiales Usados</th>
+            <th>Mermas</th>
+            <th>Acciones</th>
+            <th>Inventario</th>
+            <th>Estado Envío</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <div class="enviar-masivo-bar">
+        <button class="btn-enviar-masivo" id="btnEnviar-edicion" onclick="enviarSeleccionados('edicion')" disabled>
+          <i class="fas fa-paper-plane"></i> Enviar seleccionados a Productos Terminados
+        </button>
+      </div>
+      <div class="paginacion" id="paginacionEdicion"></div>
+    </div>
+  </div>
+  <div id="modalRecetaBackdrop" class="modal-receta-backdrop">
+    <div class="modal-receta">
+      <div class="modal-receta-header">
+        <span class="modal-receta-title">Registrar Receta</span>
+        <button class="modal-receta-close" onclick="cerrarModalReceta()">&times;</button>
+      </div>
+      <form id="formReceta" class="modal-receta-body" onsubmit="return generarOrdenProduccion()">
+        <label for="nombreProducto">Nombre del producto</label>
+        <input type="text" id="nombreProducto" name="nombreProducto" placeholder="Ej: Marco 30x40" required />
+        <label>Materiales utilizados</label>
+        <div id="materialesDinamicos" class="materiales-dinamicos"></div>
+        <button type="button" class="btn-agregar-material" onclick="agregarMaterialInput()"><i class="fas fa-plus"></i> Agregar Material</button>
+        <div id="recetaSuccess" class="modal-receta-success" style="display:none;"></div>
+      </form>
+      <div class="modal-receta-footer">
+        <button class="btn-generar-orden" type="submit" form="formReceta"><i class="fas fa-cogs"></i> Generar orden de producción</button>
+      </div>
+    </div>
+  </div>
+  <div id="modalEditarBackdrop" class="modal-editar-backdrop">
+    <div class="modal-editar">
+      <div class="modal-editar-header">
+        <span class="modal-editar-title">Editar Registro</span>
+        <button class="modal-editar-close" onclick="cerrarModalEditar()">&times;</button>
+      </div>
+      <form id="formEditar" class="modal-editar-body" onsubmit="return guardarEdicionRegistro()">
+        <label for="editarProducto">Producto Terminado</label>
+        <input type="text" id="editarProducto" name="editarProducto" required />
+        <label for="editarMateriales">Materiales Usados</label>
+        <textarea id="editarMateriales" name="editarMateriales" required placeholder="Detalle los materiales usados..."></textarea>
+        <label for="editarMerma">Mermas</label>
+        <textarea id="editarMerma" name="editarMerma" required placeholder="Detalle las mermas..."></textarea>
+        <div id="editarSuccess" class="modal-editar-success" style="display:none;"></div>
+      </form>
+      <div class="modal-editar-footer">
+        <button class="btn-guardar-editar" type="submit" form="formEditar"><i class="fas fa-save"></i> Guardar</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const menuToggle = document.getElementById('menuToggle');
+  const sidebar = document.querySelector('.sidebar');
+
+  if (menuToggle && sidebar) {
+      menuToggle.addEventListener('click', () => {
+          sidebar.classList.toggle('active');
+          menuToggle.classList.toggle('menu-active');
+      });
+  }
+});
+    function mostrarTab(idx) {
+      document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('active', i === idx));
+      document.querySelectorAll('.tab-content').forEach((tab, i) => tab.classList.toggle('active', i === idx));
+    }
+    // Estructura de datos para cada tabla
+    const tablas = {
+      interna: [
+        { prod: 'Marco 30x40', mat: 'Madera, Vidrio', merma: '...' },
+        { prod: 'Marco 20x30', mat: 'Madera, Vidrio', merma: '...' },
+        { prod: 'Marco 40x50', mat: 'Madera, Vidrio', merma: '...' },
+        { prod: 'Marco 50x70', mat: 'Madera, Vidrio', merma: '...' }
+      ],
+      enmarcado: [
+        { prod: 'Cuadro Clásico', mat: 'Moldura negra, Vidrio', merma: '...' },
+        { prod: 'Cuadro Moderno', mat: 'Moldura blanca, Vidrio', merma: '...' }
+      ],
+      minilab: [
+        { prod: 'Foto 10x15', mat: 'Papel 10x15, Tinta', merma: '...' },
+        { prod: 'Foto 13x18', mat: 'Papel 13x18, Tinta', merma: '...' }
+      ],
+      recordatorio: [
+        { prod: 'Recordatorio Escolar', mat: 'Cartulina, Tinta', merma: '...' },
+        { prod: 'Recordatorio Comunión', mat: 'Cartulina, Tinta', merma: '...' }
+      ],
+      retoque: [
+        { prod: 'Retoque Digital', mat: 'Photoshop, Tableta', merma: '...' },
+        { prod: 'Retoque IA', mat: 'IA, Tableta', merma: '...' }
+      ],
+      oleo: [
+        { prod: 'Retrato al Óleo', mat: 'Óleo, Lienzo', merma: '...' },
+        { prod: 'Paisaje al Óleo', mat: 'Óleo, Lienzo', merma: '...' }
+      ],
+      edicion: [
+        { prod: 'Montaje Gráfico', mat: 'Illustrator, Papel', merma: '...' },
+        { prod: 'Edición Especial', mat: 'Photoshop, Papel', merma: '...' }
+      ]
+    };
+    const paginacion = { interna: 1, enmarcado: 1, minilab: 1, recordatorio: 1, retoque: 1, oleo: 1, edicion: 1 };
+    const filasPorPagina = 5;
+    const filtros = { interna: '', enmarcado: '', minilab: '', recordatorio: '', retoque: '', oleo: '', edicion: '' };
+    function filtrarTabla(tipo, valor) {
+      filtros[tipo] = valor.toLowerCase();
+      paginacion[tipo] = 1;
+      renderTabla(tipo);
+    }
+    function agregarFila(tipo) {
+      const prod = prompt('Producto terminado:');
+      if (!prod) return;
+      const mat = prompt('Materiales usados:');
+      if (!mat) return;
+      const merma = prompt('Mermas (si hay):', '0');
+      tablas[tipo].push({ prod, mat, merma });
+      renderTabla(tipo);
+    }
+    function insertarMerma(tipo) {
+      const prod = document.getElementById('mermaProd'+capitalize(tipo)).value;
+      if (!prod) { alert('Indica el producto terminado para la merma.'); return; }
+      const merma = prompt('Cantidad de merma para ' + prod + ':', '1');
+      if (!merma) return;
+      tablas[tipo].push({ prod, mat: '-', merma });
+      renderTabla(tipo);
+    }
+    function editarFila(tipo, idx) {
+      // Guardar info para edición
+      window._editarTipo = tipo;
+      window._editarIdx = idx;
+      const fila = tablas[tipo][idx];
+      document.getElementById('editarProducto').value = fila.prod;
+      document.getElementById('editarMateriales').value = fila.mat;
+      document.getElementById('editarMerma').value = fila.merma;
+      document.getElementById('editarSuccess').style.display = 'none';
+      document.getElementById('modalEditarBackdrop').classList.add('active');
+    }
+    function eliminarFila(tipo, idx) {
+      if (confirm('¿Eliminar este registro?')) {
+        tablas[tipo].splice(idx, 1);
+        renderTabla(tipo);
+      }
+    }
+    function verFila(tipo, idx) {
+      const fila = tablas[tipo][idx];
+      alert(`Producto terminado: ${fila.prod}\nMateriales usados: ${fila.mat}\nMermas: ${fila.merma}`);
+    }
+    function renderTabla(tipo) {
+      const tbody = document.querySelector(`#tabla${capitalize(tipo)} tbody`);
+      tbody.innerHTML = '';
+      let datos = tablas[tipo].filter(fila =>
+        fila.prod.toLowerCase().includes(filtros[tipo]) ||
+        fila.mat.toLowerCase().includes(filtros[tipo]) ||
+        fila.merma.toLowerCase().includes(filtros[tipo])
+      );
+      const totalPaginas = Math.ceil(datos.length / filasPorPagina) || 1;
+      if (paginacion[tipo] > totalPaginas) paginacion[tipo] = totalPaginas;
+      const inicio = (paginacion[tipo] - 1) * filasPorPagina;
+      const fin = inicio + filasPorPagina;
+      datos.slice(inicio, fin).forEach((fila, idx) => {
+        const tr = document.createElement('tr');
+        const id = inicio + idx + 1;
+        tr.innerHTML = `
+          <td><input type="checkbox" class="checkbox-${tipo}" data-index="${inicio+idx}"></td>
+          <td>${id}</td>
+          <td>${fila.prod}</td>
+          <td>${fila.mat}</td>
+          <td>${fila.merma}</td>
+          <td class='acciones-btns'>
+            <button class='btn-ver' onclick="verFila('${tipo}',${inicio+idx})"><i class='fas fa-eye'></i></button>
+            <button class='btn-editar' onclick="editarFila('${tipo}',${inicio+idx})"><i class='fas fa-edit'></i></button>
+            <button class='btn-eliminar' onclick="eliminarFila('${tipo}',${inicio+idx})"><i class='fas fa-trash'></i></button>
+          </td>
+          <td><button class='btn btn-inventario' onclick="descontarInventario('${tipo}',${inicio+idx})"><i class='fas fa-minus-circle'></i> Descontar</button></td>
+          <td><span class="estado-${tipo}-${inicio+idx} ${fila.enviado ? 'estado-enviado' : 'estado-noenviado'}">${fila.enviado ? 'Enviado' : 'No enviado'}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
+      // Actualizar select de productos para merma
+      const selectMerma = document.getElementById('mermaProd'+capitalize(tipo));
+      if (selectMerma) {
+        selectMerma.innerHTML = '<option value="">Producto terminado...</option>';
+        tablas[tipo].forEach(fila => {
+          if (!selectMerma.querySelector(`option[value="${fila.prod}"]`)) {
+            selectMerma.innerHTML += `<option value="${fila.prod}">${fila.prod}</option>`;
+          }
+        });
+      }
+      // Paginación
+      const pagDiv = document.getElementById('paginacion'+capitalize(tipo));
+      if (pagDiv) {
+        pagDiv.innerHTML = '';
+        pagDiv.appendChild(crearBtnPag('Anterior', paginacion[tipo] > 1, () => { paginacion[tipo]--; renderTabla(tipo); }));
+        pagDiv.innerHTML += `<span style='margin:0 8px;'>Página ${paginacion[tipo]} de ${totalPaginas}</span>`;
+        pagDiv.appendChild(crearBtnPag('Siguiente', paginacion[tipo] < totalPaginas, () => { paginacion[tipo]++; renderTabla(tipo); }));
+      }
+    }
+    function crearBtnPag(texto, enabled, onClick) {
+      const btn = document.createElement('button');
+      btn.textContent = texto;
+      btn.disabled = !enabled;
+      if (enabled) btn.onclick = onClick;
+      return btn;
+    }
+    function capitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+    function registrarMerma(e, tipo) {
+      e.preventDefault();
+      const prod = document.getElementById('mermaProd'+capitalize(tipo)).value;
+      const detalle = document.getElementById('mermaCantidad'+capitalize(tipo)).value;
+      if (!prod || !detalle) { alert('Completa todos los campos de merma.'); return; }
+      tablas[tipo].push({ prod, mat: '-', merma: detalle });
+      renderTabla(tipo);
+      document.getElementById('mermaProd'+capitalize(tipo)).value = '';
+      document.getElementById('mermaCantidad'+capitalize(tipo)).value = '';
+    }
+    // Inicializar todas las tablas vacías
+    Object.keys(tablas).forEach(renderTabla);
+    // --- MODAL RECETA ---
+    let recetaTipoActivo = null;
+    function abrirModalReceta(tipo) {
+      recetaTipoActivo = tipo;
+      document.getElementById('modalRecetaBackdrop').classList.add('active');
+      document.getElementById('formReceta').reset();
+      document.getElementById('recetaSuccess').style.display = 'none';
+      // Limpiar materiales
+      const matDiv = document.getElementById('materialesDinamicos');
+      matDiv.innerHTML = '';
+      agregarMaterialInput();
+    }
+    function cerrarModalReceta() {
+      document.getElementById('modalRecetaBackdrop').classList.remove('active');
+    }
+    function agregarMaterialInput() {
+      const matDiv = document.getElementById('materialesDinamicos');
+      const row = document.createElement('div');
+      row.className = 'material-row';
+      row.innerHTML = `
+        <input type="text" placeholder="Material (ej: Madera)" required />
+        <input type="text" placeholder="Cantidad (ej: 2 m)" required style="max-width:90px;" />
+        <button type="button" class="btn-eliminar-material" title="Eliminar" onclick="this.parentNode.remove()"><i class="fas fa-trash"></i></button>
+      `;
+      matDiv.appendChild(row);
+    }
+    function generarOrdenProduccion() {
+      const nombre = document.getElementById('nombreProducto').value.trim();
+      const matDiv = document.getElementById('materialesDinamicos');
+      const mats = Array.from(matDiv.querySelectorAll('.material-row'))
+        .map(row => {
+          const mat = row.children[0].value.trim();
+          const cant = row.children[1].value.trim();
+          return mat && cant ? `${mat} (${cant})` : null;
+        })
+        .filter(Boolean);
+      if (!nombre || mats.length === 0) {
+        document.getElementById('recetaSuccess').style.display = 'block';
+        document.getElementById('recetaSuccess').textContent = 'Completa todos los campos.';
+        document.getElementById('recetaSuccess').style.color = '#e53935';
+        return false;
+      }
+      // Agregar a la tabla de la pestaña activa
+      tablas[recetaTipoActivo].push({ prod: nombre, mat: mats.join(', '), merma: '0' });
+      renderTabla(recetaTipoActivo);
+      document.getElementById('recetaSuccess').style.display = 'block';
+      document.getElementById('recetaSuccess').textContent = '¡Receta registrada y orden generada!';
+      document.getElementById('recetaSuccess').style.color = '#28a745';
+      setTimeout(() => cerrarModalReceta(), 1200);
+      return false;
+    }
+    // Cerrar modal al hacer click fuera
+    document.getElementById('modalRecetaBackdrop').addEventListener('click', function(e) {
+      if (e.target === this) cerrarModalReceta();
+    });
+    function cerrarModalEditar() {
+      document.getElementById('modalEditarBackdrop').classList.remove('active');
+    }
+    function guardarEdicionRegistro() {
+      const tipo = window._editarTipo;
+      const idx = window._editarIdx;
+      const prod = document.getElementById('editarProducto').value.trim();
+      const mat = document.getElementById('editarMateriales').value.trim();
+      const merma = document.getElementById('editarMerma').value.trim();
+      if (!prod || !mat || !merma) {
+        document.getElementById('editarSuccess').style.display = 'block';
+        document.getElementById('editarSuccess').textContent = 'Completa todos los campos.';
+        document.getElementById('editarSuccess').style.color = '#e53935';
+        return false;
+      }
+      tablas[tipo][idx] = { prod, mat, merma };
+      renderTabla(tipo);
+      document.getElementById('editarSuccess').style.display = 'block';
+      document.getElementById('editarSuccess').textContent = '¡Registro actualizado!';
+      document.getElementById('editarSuccess').style.color = '#28a745';
+      setTimeout(() => cerrarModalEditar(), 1000);
+      return false;
+    }
+    // Cerrar modal al hacer click fuera
+    document.getElementById('modalEditarBackdrop').addEventListener('click', function(e) {
+      if (e.target === this) cerrarModalEditar();
+    });
+    function descontarInventario(tipo, idx) {
+      alert('Funcionalidad para descontar inventario del registro ID ' + (idx+1) + ' de la tabla ' + capitalize(tipo) + ' (por implementar)');
+    }
+    function toggleSelectAll(tipo, checkbox) {
+      const checkboxes = document.querySelectorAll(`#tabla${capitalize(tipo)} .checkbox-${tipo}`);
+      checkboxes.forEach(cb => cb.checked = checkbox.checked);
+    }
+    function toggleCheckbox(tipo, checkbox) {
+      const row = checkbox.closest('tr');
+      row.classList.toggle('selected', checkbox.checked);
+    }
+    function enviarSeleccionados(tipo) {
+      const checkboxes = document.querySelectorAll(`#tabla${capitalize(tipo)} .checkbox-${tipo}`);
+      const selected = Array.from(checkboxes).filter(cb => cb.checked);
+      if (selected.length === 0) {
+        alert('No hay registros seleccionados para enviar.');
+        return;
+      }
+      const confirmacion = confirm(`¿Desea enviar los ${selected.length} registros seleccionados a Productos Terminados?`);
+      if (confirmacion) {
+        selected.forEach(cb => {
+          const index = cb.dataset.index;
+          tablas[tipo][index].enviado = true;
+          renderTabla(tipo);
+        });
+        alert('Registros enviados exitosamente.');
+      }
+    }
+  </script>
+</body>
+</html> 
