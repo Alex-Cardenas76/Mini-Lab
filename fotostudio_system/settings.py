@@ -21,12 +21,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8*9k4nc&)o)-@y(hw(pdu4eai^0we75bcspj-a*2h)vx462hab'
+# Use environment variable in production
+SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-8*9k4nc&)o)-@y(hw(pdu4eai^0we75bcspj-a*2h)vx462hab')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
 
 # Application definition
@@ -154,8 +155,8 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
 
-# Configuraciones adicionales
-ALLOWED_HOSTS = ['*']  # En producción, especificar hosts permitidos
+# Configuraciones adicionales para producción
+# Los ALLOWED_HOSTS ya están configurados arriba usando variables de entorno
 
 # Multi-tenant configuration
 TENANT_COOKIE_NAME = 'tenant_id'

@@ -1,6 +1,6 @@
-# 📸 FotoStudio - Sistema Django de Gestión para Negocio de Fotografía y Enmarcado
+# 📸 FotoStudio - Sistema de Gestión para Negocios Fotográficos
 
-Un sistema web Django completo para la gestión integral de un negocio de fotografía profesional, enmarcado y servicios fotográficos especializados. El proyecto incluye módulos para gestión de pedidos, clientes, inventario, producción, agenda y reportes financieros con soporte multi-tenant.
+Sistema web Django completo para la gestión integral de negocios de fotografía profesional, enmarcado y servicios fotográficos. Incluye módulos para pedidos, clientes, inventario, producción, agenda y reportes con arquitectura multi-tenant.
 
 ## 🚀 Características Principales
 
@@ -171,7 +171,14 @@ fotostudio_system/
    pip install -r requirements.txt
    ```
 
-4. **Desarrollo con SQLite (Recomendado para empezar)**:
+4. **Configurar variables de entorno**:
+   ```bash
+   # Copiar archivo de ejemplo
+   cp env.example .env
+   # Editar .env con tus configuraciones
+   ```
+
+5. **Desarrollo con SQLite (Recomendado para empezar)**:
    ```bash
    # Aplicar migraciones con SQLite
    python manage.py makemigrations
@@ -184,7 +191,7 @@ fotostudio_system/
    python manage.py runserver --settings=fotostudio_system.settings_dev
    ```
 
-5. **Configurar base de datos MySQL (Producción)**:
+6. **Configurar base de datos MySQL (Producción)**:
    - Crear una base de datos llamada `fotostudio_db`
    - Configurar las variables de entorno o modificar `settings.py`:
    ```python
@@ -200,13 +207,13 @@ fotostudio_system/
    }
    ```
 
-6. **Script de desarrollo rápido**:
+7. **Script de desarrollo rápido**:
    ```bash
    # Usar el script personalizado
    python run_dev.py runserver
    ```
 
-9. **Acceder al sistema**:
+8. **Acceder al sistema**:
    - Abrir navegador en `http://127.0.0.1:8000`
    - Usar las credenciales del superusuario creado
 

@@ -1,0 +1,47 @@
+# Core Django dependencies
+Django==4.2.23
+djangorestframework==3.16.1
+djangorestframework-simplejwt==5.5.1
+
+# Database
+mysqlclient==2.2.7
+PyMySQL==1.1.0
+
+# Environment and configuration
+python-decouple==3.8
+python-dotenv==1.0.0
+
+# Authentication and permissions
+django-guardian==2.4.0
+
+# API and CORS
+django-cors-headers==4.7.0
+django-filter==24.1
+
+# File processing and reports
+Pillow==10.4.0
+reportlab==4.4.3
+openpyxl==3.1.5
+xlsxwriter==3.2.5
+
+# PDF generation
+xhtml2pdf==0.2.17
+django-xhtml2pdf==0.0.4
+
+# Phone number validation
+phonenumbers==9.0.9
+
+# Timezone handling
+pytz==2024.1
+tzdata==2025.2
+
+# Static files serving
+whitenoise==6.5.0
+
+# Development and testing
+coverage==7.10.4
+pytest==8.4.1
+pytest-django==4.11.1
+pytest-cov==6.2.1
+factory-boy==3.3.3
+Faker==37.5.3
