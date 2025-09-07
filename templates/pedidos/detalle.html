@@ -1,0 +1,77 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Detalle Pedido - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/pedidos.css' %}">
+{% endblock %}
+
+{% block page_title %}Detalle del Pedido{% endblock %}
+
+{% block content %}
+<div class="detalle-pedido-container">
+    <div class="header-actions">
+        <h2>Pedido: {{ pedido.numero_pedido }}</h2>
+        <div class="acciones">
+            <a href="{% url 'pedidos:editar' pedido.pk %}" class="btn btn-warning">
+                <i class="fas fa-edit"></i> Editar
+            </a>
+            <a href="{% url 'pedidos:listar' %}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Volver
+            </a>
+        </div>
+    </div>
+    
+    <div class="pedido-info">
+        <div class="card">
+            <div class="card-header">
+                <h3>Información del Pedido</h3>
+            </div>
+            <div class="card-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Número:</label>
+                        <span>{{ pedido.numero_pedido }}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Cliente:</label>
+                        <span>
+                            {% if pedido.cliente.tipo == 'PARTICULAR' %}
+                                {{ pedido.cliente.nombres }} {{ pedido.cliente.apellidos }}
+                            {% else %}
+                                {{ pedido.cliente.razon_social }}
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <label>Servicio:</label>
+                        <span>{{ pedido.get_tipo_servicio_display }}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Estado:</label>
+                        <span class="badge badge-{{ pedido.estado|lower }}">
+                            {{ pedido.get_estado_display }}
+                        </span>
+                    </div>
+                    <div class="info-item">
+                        <label>Fecha Pedido:</label>
+                        <span>{{ pedido.fecha_pedido|date:"d/m/Y H:i" }}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Monto Total:</label>
+                        <span>S/ {{ pedido.monto_total|floatformat:2 }}</span>
+                    </div>
+                </div>
+                
+                {% if pedido.observaciones %}
+                <div class="observaciones">
+                    <h4>Observaciones:</h4>
+                    <p>{{ pedido.observaciones }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

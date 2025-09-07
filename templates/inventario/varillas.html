@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Varillas - FotoStudio{% endblock %}
+
+{% block page_title %}Gestión de Varillas{% endblock %}
+
+{% block content %}
+<div class="varillas-container">
+    <h2>Lista de Varillas</h2>
+    <p>No hay varillas registradas en el sistema.</p>
+    <a href="{% url 'inventario:listar' %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Volver al inventario
+    </a>
+</div>
+{% endblock %}

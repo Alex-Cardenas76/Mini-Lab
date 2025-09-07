@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Editar Contrato - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/contratos.css' %}">
+{% endblock %}
+
+{% block page_title %}Editar Contrato{% endblock %}
+
+{% block content %}
+<div class="editar-contrato-container">
+    <h2>Editar Contrato: {{ contrato.numero_contrato }}</h2>
+    <p>Funcionalidad en desarrollo...</p>
+    <a href="{% url 'contratos:detalle' contrato.pk %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Volver al Detalle
+    </a>
+</div>
+{% endblock %}

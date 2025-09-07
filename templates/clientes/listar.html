@@ -1,0 +1,139 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Clientes - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/clientes.css' %}">
+{% endblock %}
+
+{% block page_title %}Gestión de Clientes{% endblock %}
+
+{% block content %}
+<div class="clientes-container">
+    <div class="header-actions">
+        <h2>Lista de Clientes</h2>
+        <a href="{% url 'clientes:crear' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nuevo Cliente
+        </a>
+    </div>
+    
+    <!-- Filtros -->
+    <div class="filtros-container">
+        <form method="get" class="filtros-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <input type="text" name="busqueda" value="{{ busqueda }}" 
+                           placeholder="Buscar por nombre, DNI, RUC..." class="form-control">
+                </div>
+                <div class="form-group">
+                    <select name="tipo" class="form-control">
+                        <option value="">Todos los tipos</option>
+                        {% for value, label in tipos_cliente %}
+                            <option value="{{ value }}" {% if tipo_filtro == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-secondary">Filtrar</button>
+                    <a href="{% url 'clientes:listar' %}" class="btn btn-outline">Limpiar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Tabla de clientes -->
+    <div class="tabla-container">
+        {% if page_obj %}
+            <table class="tabla-clientes">
+                <thead>
+                    <tr>
+                        <th>Nombre/Razón Social</th>
+                        <th>Tipo</th>
+                        <th>Documento</th>
+                        <th>Contacto</th>
+                        <th>Fecha Registro</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for cliente in page_obj %}
+                    <tr>
+                        <td>
+                            {% if cliente.tipo == 'PARTICULAR' %}
+                                {{ cliente.nombres }} {{ cliente.apellidos }}
+                            {% else %}
+                                {{ cliente.razon_social }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            <span class="badge badge-{{ cliente.tipo|lower }}">
+                                {{ cliente.get_tipo_display }}
+                            </span>
+                        </td>
+                        <td>
+                            {% if cliente.dni %}
+                                DNI: {{ cliente.dni }}
+                            {% elif cliente.ruc %}
+                                RUC: {{ cliente.ruc }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if cliente.telefono %}
+                                <i class="fas fa-phone"></i> {{ cliente.telefono }}
+                            {% endif %}
+                            {% if cliente.email %}
+                                <br><i class="fas fa-envelope"></i> {{ cliente.email }}
+                            {% endif %}
+                        </td>
+                        <td>{{ cliente.created_at|date:"d/m/Y" }}</td>
+                        <td>
+                            <div class="acciones">
+                                <a href="{% url 'clientes:detalle' cliente.pk %}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{% url 'clientes:editar' cliente.pk %}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'clientes:eliminar' cliente.pk %}" class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center">No se encontraron clientes</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <!-- Paginación -->
+            {% if page_obj.has_other_pages %}
+            <div class="paginacion">
+                {% if page_obj.has_previous %}
+                    <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-sm">Anterior</a>
+                {% endif %}
+                
+                <span class="info">
+                    Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+                </span>
+                
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}" class="btn btn-sm">Siguiente</a>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% else %}
+            <div class="mensaje-vacio">
+                <h3>No hay clientes registrados</h3>
+                <p>Comienza agregando tu primer cliente</p>
+                <a href="{% url 'clientes:crear' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Crear Primer Cliente
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

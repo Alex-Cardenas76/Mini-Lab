@@ -1,0 +1,61 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Pinturas - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/inventario.css' %}">
+{% endblock %}
+
+{% block page_title %}Pinturas y Acabados{% endblock %}
+
+{% block content %}
+<div class="pinturas-container">
+    <div class="header-actions">
+        <h2>Lista de Pinturas y Acabados</h2>
+        <a href="{% url 'inventario:listar' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver al Inventario
+        </a>
+    </div>
+    
+    <div class="tabla-container">
+        {% if pinturas %}
+            <table class="tabla-pinturas">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Tipo</th>
+                        <th>Color</th>
+                        <th>Stock Actual</th>
+                        <th>Stock Mínimo</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pintura in pinturas %}
+                    <tr>
+                        <td>{{ pintura.nombre }}</td>
+                        <td>{{ pintura.get_tipo_display }}</td>
+                        <td>{{ pintura.color }}</td>
+                        <td>{{ pintura.stock_actual }}</td>
+                        <td>{{ pintura.stock_minimo }}</td>
+                        <td>
+                            {% if pintura.stock_actual <= pintura.stock_minimo %}
+                                <span class="badge badge-warning">Stock Bajo</span>
+                            {% else %}
+                                <span class="badge badge-success">OK</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="mensaje-vacio">
+                <h3>No hay pinturas registradas</h3>
+                <p>Comienza agregando pinturas al inventario</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

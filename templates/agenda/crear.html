@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Nuevo Evento - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/agenda.css' %}">
+{% endblock %}
+
+{% block page_title %}Nuevo Evento{% endblock %}
+
+{% block content %}
+<div class="crear-evento-container">
+    <h2>Crear Nuevo Evento</h2>
+    <p>Funcionalidad en desarrollo...</p>
+    <a href="{% url 'agenda:listar' %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Volver a Agenda
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Eliminar Pedido - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/pedidos.css' %}">
+{% endblock %}
+
+{% block page_title %}Eliminar Pedido{% endblock %}
+
+{% block content %}
+<div class="eliminar-pedido-container">
+    <div class="confirmacion-card">
+        <h2>¿Eliminar Pedido?</h2>
+        <p>¿Estás seguro que deseas eliminar este pedido?</p>
+        <div class="pedido-info">
+            <strong>{{ pedido.numero_pedido }}</strong> - {{ pedido.get_tipo_servicio_display }}
+        </div>
+        
+        <div class="acciones">
+            <form method="post" style="display: inline;">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">
+                    <i class="fas fa-trash"></i> Confirmar Eliminación
+                </button>
+            </form>
+            <a href="{% url 'pedidos:detalle' pedido.pk %}" class="btn btn-secondary">
+                <i class="fas fa-times"></i> Cancelar
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

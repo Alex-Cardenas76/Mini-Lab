@@ -1,0 +1,65 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Detalle Evento - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/agenda.css' %}">
+{% endblock %}
+
+{% block page_title %}Detalle del Evento{% endblock %}
+
+{% block content %}
+<div class="detalle-evento-container">
+    <div class="header-actions">
+        <h2>{{ evento.titulo }}</h2>
+        <a href="{% url 'agenda:listar' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Volver a Agenda
+        </a>
+    </div>
+    
+    <div class="evento-info">
+        <div class="card">
+            <div class="card-header">
+                <h3>Información del Evento</h3>
+            </div>
+            <div class="card-body">
+                <div class="info-grid">
+                    <div class="info-item">
+                        <label>Título:</label>
+                        <span>{{ evento.titulo }}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Tipo:</label>
+                        <span>{{ evento.get_tipo_display }}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Fecha y Hora:</label>
+                        <span>{{ evento.fecha_inicio|date:"d/m/Y H:i" }}</span>
+                    </div>
+                    <div class="info-item">
+                        <label>Estado:</label>
+                        <span class="badge badge-{{ evento.estado|lower }}">
+                            {{ evento.get_estado_display }}
+                        </span>
+                    </div>
+                </div>
+                
+                {% if evento.descripcion %}
+                <div class="descripcion">
+                    <h4>Descripción:</h4>
+                    <p>{{ evento.descripcion }}</p>
+                </div>
+                {% endif %}
+                
+                {% if evento.ubicacion %}
+                <div class="ubicacion">
+                    <h4>Ubicación:</h4>
+                    <p>{{ evento.ubicacion }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

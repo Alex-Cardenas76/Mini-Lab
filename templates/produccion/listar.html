@@ -1,0 +1,83 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Órdenes de Producción - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/produccion.css' %}">
+{% endblock %}
+
+{% block page_title %}Órdenes de Producción{% endblock %}
+
+{% block content %}
+<div class="produccion-container">
+    <div class="header-actions">
+        <h2>Lista de Órdenes de Producción</h2>
+        <a href="{% url 'produccion:crear' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nueva Orden
+        </a>
+    </div>
+    
+    <!-- Tabla de órdenes -->
+    <div class="tabla-container">
+        {% if ordenes %}
+            <table class="tabla-ordenes">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Solicitado por</th>
+                        <th>Estado</th>
+                        <th>Fecha Creación</th>
+                        <th>Prioridad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for orden in ordenes %}
+                    <tr>
+                        <td>{{ orden.numero_orden }}</td>
+                        <td>{{ orden.solicitado_por }}</td>
+                        <td>
+                            <span class="badge badge-{{ orden.estado|lower }}">
+                                {{ orden.get_estado_display }}
+                            </span>
+                        </td>
+                        <td>{{ orden.created_at|date:"d/m/Y H:i" }}</td>
+                        <td>
+                            <span class="badge prioridad-{{ orden.prioridad|lower }}">
+                                {{ orden.get_prioridad_display }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="acciones">
+                                <a href="{% url 'produccion:detalle' orden.pk %}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="mensaje-vacio">
+                <h3>No hay órdenes de producción</h3>
+                <p>Comienza creando tu primera orden de producción</p>
+                <a href="{% url 'produccion:crear' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Crear Primera Orden
+                </a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <!-- Enlaces rápidos -->
+    <div class="enlaces-rapidos">
+        <a href="{% url 'produccion:productos_terminados' %}" class="btn btn-outline">
+            <i class="fas fa-check-circle"></i> Ver Productos Terminados
+        </a>
+    </div>
+</div>
+{% endblock %}

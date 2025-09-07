@@ -1,0 +1,79 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Contratos - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/contratos.css' %}">
+{% endblock %}
+
+{% block page_title %}Gestión de Contratos{% endblock %}
+
+{% block content %}
+<div class="contratos-container">
+    <div class="header-actions">
+        <h2>Lista de Contratos</h2>
+        <a href="{% url 'contratos:crear' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Nuevo Contrato
+        </a>
+    </div>
+    
+    <div class="tabla-container">
+        {% if contratos %}
+            <table class="tabla-contratos">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Cliente</th>
+                        <th>Tipo</th>
+                        <th>Fecha Inicio</th>
+                        <th>Estado</th>
+                        <th>Monto</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for contrato in contratos %}
+                    <tr>
+                        <td>{{ contrato.numero_contrato }}</td>
+                        <td>
+                            {% if contrato.cliente.tipo == 'PARTICULAR' %}
+                                {{ contrato.cliente.nombres }} {{ contrato.cliente.apellidos }}
+                            {% else %}
+                                {{ contrato.cliente.razon_social }}
+                            {% endif %}
+                        </td>
+                        <td>{{ contrato.get_tipo_display }}</td>
+                        <td>{{ contrato.fecha_inicio|date:"d/m/Y" }}</td>
+                        <td>
+                            <span class="badge badge-{{ contrato.estado|lower }}">
+                                {{ contrato.get_estado_display }}
+                            </span>
+                        </td>
+                        <td>S/ {{ contrato.monto_total|floatformat:2 }}</td>
+                        <td>
+                            <div class="acciones">
+                                <a href="{% url 'contratos:detalle' contrato.pk %}" class="btn btn-sm btn-info">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{% url 'contratos:editar' contrato.pk %}" class="btn btn-sm btn-warning">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="mensaje-vacio">
+                <h3>No hay contratos registrados</h3>
+                <p>Comienza creando tu primer contrato</p>
+                <a href="{% url 'contratos:crear' %}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Crear Primer Contrato
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

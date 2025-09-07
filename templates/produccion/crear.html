@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Nueva Orden - FotoStudio{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/produccion.css' %}">
+{% endblock %}
+
+{% block page_title %}Nueva Orden de Producción{% endblock %}
+
+{% block content %}
+<div class="crear-orden-container">
+    <h2>Crear Nueva Orden de Producción</h2>
+    <p>Funcionalidad en desarrollo...</p>
+    <a href="{% url 'produccion:listar' %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Volver a Órdenes
+    </a>
+</div>
+{% endblock %}

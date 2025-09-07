@@ -1,0 +1,140 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FotoStudio - Sistema de Gestión Fotográfica{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block body %}
+    <div class="container">
+        <!-- Menú barra superior móvil -->
+        <button id="pd-menu-toggle" class="pd-menu-toggle">
+            <span class="pd-menu-icon"></span>
+        </button>
+        <div id="pd-topbar-menu" class="pd-topbar-menu">
+            <div class="pd-topbar-menu-content">
+                <button id="pd-menu-close" class="pd-menu-close"><i class="fas fa-times"></i></button>
+                <div class="pd-logo">FotoStudio</div>
+                <nav class="pd-nav-menu">
+                    <ul>
+                        <li><a href="{% url 'dashboard' %}" class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                        <li><a href="{% url 'pedidos:listar' %}" class="{% if 'pedidos' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-receipt"></i> Pedidos</a></li>
+                        <li><a href="{% url 'clientes:listar' %}" class="{% if 'clientes' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-users"></i> Clientes</a></li>
+                        <li><a href="{% url 'contratos:listar' %}" class="{% if 'contratos' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-file-signature"></i> Contratos</a></li>
+                        <li><a href="{% url 'inventario:listar' %}" class="{% if 'inventario' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-boxes"></i> Inventario</a></li>
+                        <li><a href="{% url 'produccion:listar' %}" class="{% if 'produccion' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-cogs"></i> Orden de Producción</a></li>
+                        <li><a href="{% url 'produccion:productos_terminados' %}" class="{% if request.resolver_match.url_name == 'productos_terminados' %}active{% endif %}"><i class="fas fa-cogs"></i> Productos Terminados</a></li>
+                        <li><a href="{% url 'agenda:listar' %}" class="{% if 'agenda' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-calendar-alt"></i> Agenda</a></li>
+                        <li><a href="{% url 'reportes:dashboard' %}" class="{% if 'reportes' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-chart-bar"></i> Reportes</a></li>
+                        <li><a href="{% url 'configuracion' %}" class="{% if request.resolver_match.url_name == 'configuracion' %}active{% endif %}"><i class="fas fa-cogs"></i> Configuración</a></li>
+                        <li><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i> Salir</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        
+        <!-- Menú lateral -->
+        <div class="sidebar">
+            <div class="logo">FotoStudio</div>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="nav-item"><a href="{% url 'dashboard' %}" class="nav-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+                    <li class="nav-item"><a href="{% url 'pedidos:listar' %}" class="nav-link {% if 'pedidos' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-receipt"></i><span>Pedidos</span></a></li>
+                    <li class="nav-item"><a href="{% url 'clientes:listar' %}" class="nav-link {% if 'clientes' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-users"></i><span>Clientes</span></a></li>
+                    <li class="nav-item"><a href="{% url 'contratos:listar' %}" class="nav-link {% if 'contratos' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-file-signature"></i><span>Contratos</span></a></li>
+                    <li class="nav-item"><a href="{% url 'inventario:listar' %}" class="nav-link {% if 'inventario' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-boxes"></i><span>Inventario</span></a></li>
+                    <li class="nav-item"><a href="{% url 'produccion:listar' %}" class="nav-link {% if 'produccion' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-cogs"></i><span>Orden de Producción</span></a></li>
+                    <li class="nav-item"><a href="{% url 'produccion:productos_terminados' %}" class="nav-link {% if request.resolver_match.url_name == 'productos_terminados' %}active{% endif %}"><i class="fas fa-box"></i><span>Productos Terminados</span></a></li>
+                    <li class="nav-item"><a href="{% url 'agenda:listar' %}" class="nav-link {% if 'agenda' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-calendar-alt"></i><span>Agenda</span></a></li>
+                    <li class="nav-item"><a href="{% url 'reportes:dashboard' %}" class="nav-link {% if 'reportes' in request.resolver_match.namespace %}active{% endif %}"><i class="fas fa-chart-bar"></i><span>Reportes</span></a></li>
+                    <li class="nav-item"><a href="{% url 'configuracion' %}" class="nav-link {% if request.resolver_match.url_name == 'configuracion' %}active{% endif %}"><i class="fas fa-cogs"></i><span>Configuración</span></a></li>
+                    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link"><i class="fas fa-sign-out-alt"></i><span>Salir</span></a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="main-content">
+            {% block header %}
+            <div class="header">
+                <h1>{% block page_title %}FotoStudio{% endblock %}</h1>
+                <div class="user-info">
+                    <span>Bienvenido, {{ user.get_full_name|default:user.username }}</span>
+                </div>
+            </div>
+            {% endblock %}
+
+            {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+
+    <!-- Scripts base -->
+    <script>
+        // JavaScript para el menú móvil
+        document.addEventListener('DOMContentLoaded', function() {
+            const pdMenuToggle = document.getElementById('pd-menu-toggle');
+            const pdTopbarMenu = document.getElementById('pd-topbar-menu');
+            const pdMenuClose = document.getElementById('pd-menu-close');
+            
+            function isMobilePD() { return window.innerWidth <= 768; }
+            
+            function openPDMenu() {
+                pdTopbarMenu.classList.add('active');
+                pdMenuToggle.style.display = 'none';
+            }
+            
+            function closePDMenu() {
+                pdTopbarMenu.classList.remove('active');
+                pdMenuToggle.style.display = 'block';
+            }
+            
+            if (pdMenuToggle) {
+                pdMenuToggle.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    openPDMenu();
+                });
+            }
+            
+            if (pdMenuClose) {
+                pdMenuClose.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    closePDMenu();
+                });
+            }
+            
+            if (pdTopbarMenu) {
+                pdTopbarMenu.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                });
+            }
+            
+            window.addEventListener('resize', function() {
+                if (!isMobilePD()) {
+                    closePDMenu();
+                }
+            });
+            
+            closePDMenu();
+        });
+    </script>
+    
+    {% block extra_js %}{% endblock %}
+    {% endblock %}
+</body>
+</html>

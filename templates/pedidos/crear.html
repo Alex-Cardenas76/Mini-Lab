@@ -1,0 +1,16 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block title %}Nuevo Pedido - FotoStudio{% endblock %}
+
+{% block page_title %}Crear Nuevo Pedido{% endblock %}
+
+{% block content %}
+<div class="crear-pedido-container">
+    <h2>Crear Nuevo Pedido</h2>
+    <p>Funcionalidad en desarrollo...</p>
+    <a href="{% url 'pedidos:listar' %}" class="btn btn-secondary">
+        <i class="fas fa-arrow-left"></i> Volver a la lista
+    </a>
+</div>
+{% endblock %}
