@@ -112,28 +112,30 @@ Este plan organiza el desarrollo del sistema de gestión empresarial en **4 mód
 ## 3️⃣ INTEGRACIÓN AL PROYECTO BASE
 
 ### 📂 Estructura de carpetas recomendada
+```text
 av1-orginal/
-    ├── config/ # Configuración base (existente)
-    ├── core/ # Módulo 1: Core & Authentication
-    │ ├── tenants/
-    │ ├── usuarios/
-    │ └── shared/ # Servicios compartidos
-    ├── commercial/ # Módulo 2: Gestión Comercial
-    │ ├── clientes/
-    │ ├── contratos/
-    │ └── pedidos/
-    ├── inventory/ # Módulo 3: Inventario y Materiales
-    │ ├── inventario/
-    │ ├── materiales/
-    │ └── shared/ # Servicios de inventario
-    ├── operations/ # Módulo 4: Producción y Operaciones
-    │ ├── produccion/
-    │ ├── agenda/
-    │ └── shared/ # Servicios de producción
-    └── shared/ # Utilidades globales
+├── config/ # Configuración base (existente)
+├── core/ # Módulo 1: Core & Authentication
+│   ├── tenants/
+│   ├── usuarios/
+│   └── shared/ # Servicios compartidos
+├── commercial/ # Módulo 2: Gestión Comercial
+│   ├── clientes/
+│   ├── contratos/
+│   └── pedidos/
+├── inventory/ # Módulo 3: Inventario y Materiales
+│   ├── inventario/
+│   ├── materiales/
+│   └── shared/ # Servicios de inventario
+├── operations/ # Módulo 4: Producción y Operaciones
+│   ├── produccion/
+│   ├── agenda/
+│   └── shared/ # Servicios de producción
+└── shared/ # Utilidades globales
     ├── middleware/
     ├── permissions/
     └── utils/
+
 
 
 
