@@ -1,379 +1,191 @@
-# 📸 FotoStudio - Sistema de Gestión para Negocios Fotográficos
-
-Sistema web Django completo para la gestión integral de negocios de fotografía profesional, enmarcado y servicios fotográficos. Incluye módulos para pedidos, clientes, inventario, producción, agenda y reportes con arquitectura multi-tenant.
-
-## 🚀 Características Principales
-
-- **Dashboard Interactivo**: Panel de control con métricas en tiempo real
-- **Gestión de Pedidos**: Control completo del flujo de pedidos desde creación hasta entrega
-- **Administración de Clientes**: Base de datos de clientes particulares y corporativos (colegios)
-- **Control de Inventario**: Seguimiento detallado de materiales, varillas, pinturas y productos terminados
-- **Órdenes de Producción**: Planificación y seguimiento de la producción de marcos y productos
-- **Agenda Digital**: Programación de citas y seguimiento de entregas
-- **Reportes Avanzados**: Análisis financiero con métricas detalladas
-- **Multi-Tenant**: Soporte para múltiples empresas en una sola instalación
-- **Sistema Responsivo**: Interfaz adaptable para dispositivos móviles y desktop
-
-## 🏗️ Arquitectura del Proyecto
-
-### Estructura Django
-
-```
-fotostudio_system/
-├── 📁 apps/                                    # Apps del proyecto organizadas
-│   ├── 📁 core/                               # App principal con modelos base
-│   │   ├── models.py                          # Modelos base y multi-tenant
-│   │   ├── middleware/                        # Middleware personalizado
-│   │   └── views.py                          # Vistas principales
-│   ├── 📁 clientes/                          # Gestión de clientes
-│   ├── 📁 pedidos/                           # Gestión de pedidos
-│   ├── 📁 contratos/                         # Gestión de contratos
-│   ├── 📁 inventario/                        # Control de inventario
-│   ├── 📁 produccion/                        # Órdenes de producción
-│   ├── 📁 agenda/                            # Agenda y citas
-│   └── 📁 reportes/                          # Reportes y métricas
-├── 📁 templates/                             # Templates organizados por app
-│   ├── 📁 base/                              # Templates base
-│   ├── 📁 auth/                              # Templates de autenticación
-│   └── 📁 [app_name]/                        # Templates por app
-├── 📁 static/                                # Archivos estáticos
-│   └── 📁 css/                               # Hojas de estilo CSS
-├── 📁 fotostudio_system/                     # Configuración del proyecto
-│   ├── settings.py                           # Configuración Django
-│   └── urls.py                              # URLs principales
-├── manage.py                                 # Script de gestión Django
-├── requirements.txt                          # Dependencias del proyecto
-└── README.md                                 # Este archivo
-```
-
-### Apps Independientes
-
-1. **`apps.core`**: Modelos base, middleware multi-tenant, vistas principales
-2. **`apps.clientes`**: Gestión de clientes particulares y corporativos
-3. **`apps.pedidos`**: Gestión completa de pedidos con diferentes tipos de servicio
-4. **`apps.contratos`**: Contratos escolares y empresariales
-5. **`apps.inventario`**: Control de stock de varillas, pinturas, materiales
-6. **`apps.produccion`**: Órdenes de producción y productos terminados
-7. **`apps.agenda`**: Eventos, citas y programación
-8. **`apps.reportes`**: Métricas financieras y reportes
-
-## 🛠️ Tecnologías Utilizadas
-
-### Backend
-- **Django 4.2**: Framework web principal
-- **MySQL**: Base de datos principal
-- **Python 3.8+**: Lenguaje de programación
-
-### Frontend
-- **HTML5**: Estructura semántica de las páginas
-- **CSS3**: Estilos responsivos con variables CSS
-- **Chart.js**: Gráficos interactivos para reportes (integrado en templates)
-- **Font Awesome**: Iconografía profesional
-
-### Características de Django
-- **Multi-Tenant**: Soporte para múltiples tenants usando row-level security
-- **Modelos Relacionales**: Estructura robusta con ForeignKeys y relaciones
-- **Sistema de Autenticación**: Login/logout integrado
-- **Middleware Personalizado**: Para manejo de multi-tenancy
-- **Admin Interface**: Panel de administración de Django
-- **ORM Avanzado**: Consultas optimizadas y relaciones complejas
-
-## 📋 Módulos del Sistema
-
-### 1. 🏠 Dashboard
-- **Métricas en tiempo real**: Pedidos nuevos, en producción, entregados
-- **Alertas de inventario**: Stock bajo y productos críticos
-- **Gráficos estadísticos**: Ingresos por servicio
-- **Pedidos recientes**: Vista rápida de últimas transacciones
-
-### 2. 📝 Gestión de Pedidos
-- **CRUD completo**: Crear, leer, actualizar y eliminar pedidos
-- **Estados de pedido**: Nuevo, En Producción, Entregado, Cancelado
-- **Tipos de servicio detallados**:
-  - Impresión Minilab (con detalles de papel y cantidad)
-  - Recordatorios Escolares (con plantillas y cantidades)
-  - Enmarcado (con medidas y tipos de marco)
-  - Retoque Fotográfico (con tipos de retoque)
-- **Archivos adjuntos**: Soporte para subir archivos por pedido
-- **Historial de estados**: Seguimiento completo de cambios
-
-### 3. 👥 Administración de Clientes
-- **Clientes particulares**: Datos personales completos
-- **Clientes corporativos**: Colegios y empresas con contactos
-- **Historial de interacciones**: Registro de llamadas, emails, visitas
-- **Validaciones automáticas**: Según tipo de cliente
-
-### 4. 📋 Gestión de Contratos
-- **Contratos escolares**: Campañas fotográficas con detalles específicos
-- **Contratos empresariales**: Servicios corporativos
-- **Sistema de pagos**: Registro de pagos con documentos
-- **Renovaciones automáticas**: Control de vencimientos
-- **Documentos adjuntos**: Almacenamiento de contratos y anexos
-
-### 5. 📦 Control de Inventario
-**Sistema de Inventario Robusto:**
-- **Varillas/Molduras**: Con medidas, materiales, colores
-- **Pinturas y Acabados**: Clasificadas por tipo y color
-- **Materiales de Impresión**: Papel fotográfico, químicos, tintas
-- **Materiales para Recordatorios**: Suministros especializados
-- **Movimientos de Inventario**: Historial completo de entradas/salidas
-- **Alertas de Stock**: Notificaciones automáticas de stock bajo
-- **Productos Terminados**: Control de productos listos para venta
-
-### 6. 🏭 Órdenes de Producción
-- **Planificación detallada**: Órdenes con materiales específicos
-- **Estados de orden**: Abierta, En Proceso, Cerrada, Cancelada
-- **Control de merma**: Seguimiento de desperdicios
-- **Cuadros producidos**: Registro individual de productos
-- **Control de calidad**: Evaluación de productos terminados
-- **Historial de producción**: Registro de eventos y cambios
-
-### 7. 📅 Agenda Digital
-- **Eventos programados**: Sesiones fotográficas, entregas, reuniones
-- **Recordatorios automáticos**: Configurables por evento
-- **Gestión de recursos**: Salas, equipos, personal
-- **Eventos recurrentes**: Programación automática
-- **Historial de eventos**: Seguimiento de cambios
-
-### 8. 📊 Reportes y Métricas
-- **Métricas Financieras**: Ingresos por servicio, costos, utilidades
-- **Métricas de Inventario**: Stock, movimientos, valorización
-- **Métricas de Producción**: Eficiencia, merma, calidad
-- **Reportes configurables**: Parámetros personalizables
-- **Exportación**: PDF, Excel, CSV
-
-## 🚀 Instalación y Configuración
-
-### Requisitos Previos
-- Python 3.8 o superior
-- MySQL 5.7 o superior
-- pip (gestor de paquetes de Python)
-
-### Instalación
-
-1. **Clonar el repositorio**:
-   ```bash
-   git clone [url-del-repositorio]
-   cd Mini-Lab
-   ```
-
-2. **Crear entorno virtual**:
-   ```bash
-   python -m venv venv
-   # Windows:
-   venv\Scripts\activate
-   # Linux/Mac:
-   source venv/bin/activate
-   ```
-
-3. **Instalar dependencias**:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Configurar variables de entorno**:
-   ```bash
-   # Copiar archivo de ejemplo
-   cp env.example .env
-   # Editar .env con tus configuraciones
-   ```
-
-5. **Desarrollo con SQLite (Recomendado para empezar)**:
-   ```bash
-   # Aplicar migraciones con SQLite
-   python manage.py makemigrations
-   python manage.py migrate --settings=fotostudio_system.settings_dev
-   
-   # Crear superusuario (password: admin123)
-   python manage.py createsuperuser --settings=fotostudio_system.settings_dev
-   
-   # Ejecutar servidor de desarrollo
-   python manage.py runserver --settings=fotostudio_system.settings_dev
-   ```
-
-6. **Configurar base de datos MySQL (Producción)**:
-   - Crear una base de datos llamada `fotostudio_db`
-   - Configurar las variables de entorno o modificar `settings.py`:
-   ```python
-   DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.mysql',
-           'NAME': 'fotostudio_db',
-           'USER': 'tu_usuario',
-           'PASSWORD': 'tu_contraseña',
-           'HOST': 'localhost',
-           'PORT': '3306',
-       }
-   }
-   ```
-
-7. **Script de desarrollo rápido**:
-   ```bash
-   # Usar el script personalizado
-   python run_dev.py runserver
-   ```
-
-8. **Acceder al sistema**:
-   - Abrir navegador en `http://127.0.0.1:8000`
-   - Usar las credenciales del superusuario creado
-
-## 🔧 Configuración Multi-Tenant
-
-### Variables de Entorno
-Configurar las siguientes variables para personalizar el comportamiento:
-
-```bash
-# Base de datos
-DB_NAME=fotostudio_db
-DB_USER=tu_usuario
-DB_PASSWORD=tu_contraseña
-DB_HOST=localhost
-DB_PORT=3306
-
-# Multi-tenant
-TENANT_COOKIE_NAME=tenant_id
-TENANT_HEADER_NAME=HTTP_X_TENANT_ID
-```
-
-### Configuración de Tenants
-1. Acceder al admin de Django: `/admin/`
-2. Crear registros en el modelo `Tenant`
-3. Asociar usuarios a tenants usando `TenantUser`
-
-## 📱 Uso del Sistema
-
-### Navegación
-- **Menú lateral**: Navegación principal en dispositivos desktop
-- **Menú móvil**: Hamburguesa en la parte superior para dispositivos móviles
-- **Breadcrumbs**: Navegación contextual en cada módulo
-
-### Funcionalidades Principales
-1. **Login**: Sistema de autenticación Django
-2. **Dashboard**: Vista general del estado del negocio
-3. **Gestión de datos**: CRUD completo en todos los módulos
-4. **Reportes**: Métricas y análisis detallados
-5. **Multi-tenant**: Separación automática de datos por tenant
-
-## 🗄️ Estructura de Base de Datos
-
-### Modelos Principales
-- **Tenant**: Gestión de múltiples empresas
-- **Cliente**: Particulares y corporativos
-- **Pedido**: Con detalles específicos por tipo de servicio
-- **Contrato**: Escolares y empresariales
-- **Inventario**: Varillas, pinturas, materiales
-- **OrdenProduccion**: Con detalles y cuadros producidos
-- **EventoAgenda**: Programación y recordatorios
-- **Métricas**: Financieras, inventario, producción
-
-### Multi-Tenancy
-- Todos los modelos incluyen `tenant_id`
-- Middleware automático para filtrado
-- Separación completa de datos por tenant
-
-## 🔒 Seguridad
-
-- **Autenticación requerida**: Todas las vistas protegidas
-- **Multi-tenant**: Separación automática de datos
-- **Validaciones**: En modelos y formularios
-- **CSRF Protection**: Protección contra ataques CSRF
-- **SQL Injection**: Protección mediante ORM de Django
-
-## 🚧 Desarrollo
-
-### Estructura de Código
-- **Modelos**: Organizados por funcionalidad
-- **Vistas**: CBV y FBV según necesidad
-- **Templates**: Herencia y bloques reutilizables
-- **URLs**: Namespaces por app
-- **Middleware**: Personalizado para multi-tenancy
-
-### Comandos Útiles
-```bash
-# Crear migraciones
-python manage.py makemigrations
-
-# Aplicar migraciones
-python manage.py migrate
-
-# Crear app nueva
-python manage.py startapp nueva_app
-
-# Shell de Django
-python manage.py shell
-
-# Ejecutar tests
-python manage.py test
-```
-
-## 📈 Próximas Funcionalidades
-
-### Mejoras Pendientes
-- [ ] APIs REST con Django REST Framework
-- [ ] Sistema de notificaciones en tiempo real
-- [ ] Integración con sistemas de pago
-- [ ] Generación automática de facturas
-- [ ] Backup automático de datos
-- [ ] Dashboard de métricas avanzado
-- [ ] Integración con servicios de email/SMS
-
-### Optimizaciones Técnicas
-- [ ] Cache con Redis
-- [ ] Optimización de consultas
-- [ ] Tests automatizados
-- [ ] CI/CD pipeline
-- [ ] Monitoring y logging
-
-## 🤝 Contribución
-
-Para contribuir al proyecto:
-1. Fork del repositorio
-2. Crear rama para nueva funcionalidad
-3. Implementar cambios siguiendo las convenciones Django
-4. Crear Pull Request con descripción detallada
-
-## 📄 Licencia
-
-Este proyecto está bajo licencia MIT. Ver archivo `LICENSE` para más detalles.
-
-## 📞 Soporte
-
-Para soporte técnico o consultas:
-- **Documentación**: Este README y docstrings en el código
-- **Issues**: Reportar problemas en el sistema de issues del repositorio
-- **Django Admin**: Panel de administración en `/admin/`
+# 🏗️ PLAN DE DESARROLLO MODULAR  
+## SISTEMA DE GESTIÓN EMPRESARIAL MULTI-TENANT
 
 ---
 
-## 🏆 Estado del Proyecto
-
-**Versión**: 2.0.0 (Django Migration)
-**Estado**: ✅ Migrado - Sistema Django funcional
-**Última actualización**: Enero 2025
-
-### Funcionalidades Implementadas ✅
-- [x] Migración completa a Django
-- [x] Sistema multi-tenant con row-level security
-- [x] Modelos robustos con relaciones
-- [x] Dashboard con métricas
-- [x] Gestión completa de pedidos
-- [x] Administración de clientes
-- [x] Control de inventario avanzado
-- [x] Órdenes de producción
-- [x] Agenda digital
-- [x] Sistema de reportes
-- [x] Autenticación y autorización
-- [x] Diseño responsivo
-- [x] Conexión MySQL
-- [x] Estructura escalable
-
-### Cambios de la Migración 🔄
-- ✅ Frontend estático → Django templates
-- ✅ JavaScript → Python/Django logic
-- ✅ Sin base de datos → MySQL con ORM
-- ✅ Single-tenant → Multi-tenant
-- ✅ Datos simulados → Modelos relacionales
+## 📌 RESUMEN EJECUTIVO
+Este plan organiza el desarrollo del sistema de gestión empresarial en **4 módulos independientes**, que pueden desarrollarse en paralelo, minimizando dependencias y facilitando la integración al proyecto base Django existente.
 
 ---
 
-*Desarrollado con ❤️ utilizando Django para optimizar la gestión de negocios fotográficos profesionales.*
+## 1️⃣ DEFINICIÓN DE LOS 4 MÓDULOS PRINCIPALES
+
+### 🔹 MÓDULO 1: CORE & AUTHENTICATION
+**Propósito:** Base del sistema multi-tenant y autenticación  
+**Apps incluidas:** `tenants`, `usuarios`  
+
+**Modelos principales:**
+- `Tenant` (empresas cliente)  
+- `Users` (sistema de usuarios personalizado)  
+- `DocumentTypes`, `AuthGroup`, `AuthPermission`  
+- `UsersVerificationCode`  
+
+**Funcionalidades:**
+- Gestión de tenants (empresas)  
+- Sistema de autenticación multi-tenant  
+- Gestión de usuarios, roles y permisos  
+- Códigos de verificación y seguridad  
+- Middleware de tenant isolation  
+
+---
+
+### 🔹 MÓDULO 2: GESTIÓN COMERCIAL
+**Propósito:** Manejo de clientes, contratos y pedidos  
+**Apps incluidas:** `clientes`, `contratos`, `pedidos`  
+
+**Modelos principales:**
+- `Cliente` (base de clientes)  
+- `Contrato` (acuerdos comerciales)  
+- `Pedido`, `DetallePedido` (órdenes de compra)  
+
+**Funcionalidades:**
+- Registro y gestión de clientes  
+- Creación y seguimiento de contratos  
+- Procesamiento de pedidos  
+- Estados de pedidos y contratos  
+- Cálculo automático de totales  
+
+---
+
+### 🔹 MÓDULO 3: GESTIÓN DE INVENTARIO Y MATERIALES
+**Propósito:** Control de stock y catálogo de productos  
+**Apps incluidas:** `inventario`, `materiales`  
+
+**Modelos principales:**
+- `Inventario` (control general de stock)  
+- `PinturaAcabado`, `MaterialImpresion`, `MaterialRecordatorio`  
+- `SoftwareEquipo`, `MaterialPintura`, `MaterialDiseno`  
+- `ProductoTerminado`, `Varilla`  
+
+**Funcionalidades:**
+- Control de stock en tiempo real  
+- Gestión de materiales por categorías  
+- Alertas de stock mínimo  
+- Ubicación de productos  
+- Seguimiento de movimientos  
+
+---
+
+### 🔹 MÓDULO 4: GESTIÓN DE PRODUCCIÓN Y OPERACIONES
+**Propósito:** Planificación de producción y operaciones diarias  
+**Apps incluidas:** `produccion`, `agenda`  
+
+**Modelos principales:**
+- `OrdenProduccion`, `DetalleOrden`  
+- `Cuadro`, `Varilla` (producción)  
+- `MovimientoInventario`  
+- `Agenda` (citas y eventos)  
+
+**Funcionalidades:**
+- Planificación de órdenes de producción  
+- Seguimiento de productos en proceso  
+- Gestión de agenda y citas  
+- Control de movimientos de inventario  
+- Estados de producción  
+
+---
+
+## 2️⃣ DEPENDENCIAS ENTRE MÓDULOS
+
+### ⚠️ Dependencias críticas
+- **Módulo 1 (Core) → Todos los demás módulos**  
+  Todos los módulos dependen del sistema de tenants y usuarios.  
+  El campo `tenant_id` es requerido en todos los modelos.
+
+### 🔗 Dependencias funcionales
+- **Módulo 2 (Comercial) → Módulo 3 (Inventario)**  
+  - Los pedidos requieren validación de stock disponible  
+  - Los contratos pueden referenciar productos del inventario  
+
+- **Módulo 4 (Producción) → Módulo 3 (Inventario)**  
+  - Las órdenes de producción consumen materiales del inventario  
+  - Los productos terminados se registran en inventario  
+
+### 💡 Buenas prácticas para minimizar dependencias
+- Interfaces bien definidas: Cada módulo expone APIs claras  
+- Eventos asincrónicos: Usar signals de Django para comunicación  
+- Servicios compartidos: Crear capa de servicios para lógica común  
+- Abstracción de datos: Usar DTOs para intercambio de información  
+
+---
+
+## 3️⃣ INTEGRACIÓN AL PROYECTO BASE
+
+### 📂 Estructura de carpetas recomendada
+av1-orginal/
+    ├── config/ # Configuración base (existente)
+    ├── core/ # Módulo 1: Core & Authentication
+    │ ├── tenants/
+    │ ├── usuarios/
+    │ └── shared/ # Servicios compartidos
+    ├── commercial/ # Módulo 2: Gestión Comercial
+    │ ├── clientes/
+    │ ├── contratos/
+    │ └── pedidos/
+    ├── inventory/ # Módulo 3: Inventario y Materiales
+    │ ├── inventario/
+    │ ├── materiales/
+    │ └── shared/ # Servicios de inventario
+    ├── operations/ # Módulo 4: Producción y Operaciones
+    │ ├── produccion/
+    │ ├── agenda/
+    │ └── shared/ # Servicios de producción
+    └── shared/ # Utilidades globales
+    ├── middleware/
+    ├── permissions/
+    └── utils/
+
+
+
+
+## 4️⃣ ORIENTACIÓN PARA DESARROLLO EN PARALELO
+
+### 🛠️ Gestión de migraciones
+- Migraciones independientes por módulo.  
+- Prefijos en nombres: `0001_initial_core`, `0001_initial_commercial`.  
+- **Orden de migración:**
+  1. Core & Authentication (Módulo 1)  
+  2. Inventario y Materiales (Módulo 3)  
+  3. Gestión Comercial (Módulo 2)  
+  4. Producción y Operaciones (Módulo 4)  
+
+### 🗄️ Estrategia de base de datos
+- Base de datos única con aislamiento por `tenant_id`.  
+- Índices optimizados por módulo.  
+- Constraints de integridad referencial.  
+
+### 📚 Documentación por módulo
+- **README.md específico:** propósito, modelos, APIs, dependencias, guía de instalación.  
+- **Documentación técnica:** diagramas, flujos de trabajo, casos de uso, configuración.  
+- **Documentación de APIs:** endpoints, parámetros, ejemplos, códigos de error.  
+
+---
+
+## 5️⃣ NOTAS ADICIONALES
+
+### 🚀 Recomendaciones de escalabilidad
+- Arquitectura de microservicios futura: cada módulo puede convertirse en microservicio independiente.  
+- APIs REST bien definidas facilitan la migración.  
+- Base de datos puede particionarse por módulo.  
+
+### ⚡ Optimización de rendimiento
+- Cache por módulo usando Redis.  
+- Índices de base de datos optimizados.  
+- Paginación en todas las listas.  
+- Lazy loading de relaciones.  
+
+### 📊 Monitoreo y logging
+- Logs estructurados por módulo.  
+- Métricas de rendimiento independientes.  
+- Alertas específicas por funcionalidad.  
+
+### 🧪 Estrategias de Testing
+- **Testing independiente:** tests unitarios por módulo, mocks, DB de testing separada.  
+- **Testing de integración:** tests de APIs entre módulos, validación de flujos completos, tests de regresión automatizados.  
+- **Testing de carga:** pruebas de rendimiento por módulo, simulación multi-tenant, optimización basada en resultados.  
+
+### 🔧 Estrategias de mantenimiento
+- **Versionado de módulos:** versionado semántico independiente, compatibilidad hacia atrás, deprecación gradual.  
+- **Despliegue independiente:** CI/CD por módulo, rollback granular, despliegue sin downtime.  
+- **Monitoreo de salud:** health checks por módulo, alertas proactivas, métricas de negocio.
+
