@@ -1,213 +1,193 @@
-# Sistema de Gestión Empresarial Multi-tenant
+# 🏗️ PLAN DE DESARROLLO MODULAR  
+## SISTEMA DE GESTIÓN EMPRESARIAL MULTI-TENANT
 
-## Descripción General
+---
 
-Este es un sistema de gestión empresarial desarrollado en Django que implementa una arquitectura multi-tenant para manejar múltiples empresas o clientes de forma independiente. El sistema está diseñado específicamente para empresas que se dedican a la producción de cuadros y varillas, incluyendo gestión de inventario, pedidos, contratos y producción.
+## 📌 RESUMEN EJECUTIVO
+Este plan organiza el desarrollo del sistema de gestión empresarial en **4 módulos independientes**, que pueden desarrollarse en paralelo, minimizando dependencias y facilitando la integración al proyecto base Django existente.
 
-## Características Principales
+---
 
-### �� Arquitectura Multi-tenant
-- **Sistema de Tenants**: Cada empresa cliente tiene su propio espacio aislado
-- **Aislamiento de Datos**: Todos los datos están separados por `tenant_id`
-- **Gestión de Usuarios**: Sistema de autenticación personalizado con roles y permisos
+## 1️⃣ DEFINICIÓN DE LOS 4 MÓDULOS PRINCIPALES
 
-### 📋 Módulos del Sistema
+### 🔹 MÓDULO 1: CORE & AUTHENTICATION
+**Propósito:** Base del sistema multi-tenant y autenticación  
+**Apps incluidas:** `tenants`, `usuarios`  
 
-#### 1. **Gestión de Tenants** (`tenants/`)
-- Administración de empresas cliente
-- Configuración de subdominios únicos
-- Estados: activo, inactivo, suspendido
+**Modelos principales:**
+- `Tenant` (empresas cliente)  
+- `Users` (sistema de usuarios personalizado)  
+- `DocumentTypes`, `AuthGroup`, `AuthPermission`  
+- `UsersVerificationCode`  
 
-#### 2. **Gestión de Usuarios** (`usuarios/`)
-- Sistema de autenticación personalizado
-- Tipos de documentos de identidad
-- Grupos y permisos de usuario
-- Códigos de verificación y seguridad
-- Gestión de sesiones y tokens
+**Funcionalidades:**
+- Gestión de tenants (empresas)  
+- Sistema de autenticación multi-tenant  
+- Gestión de usuarios, roles y permisos  
+- Códigos de verificación y seguridad  
+- Middleware de tenant isolation  
 
-#### 3. **Gestión de Clientes** (`clientes/`)
-- Registro de clientes (personas, empresas, otros)
-- Información de contacto completa
-- Historial de transacciones
+---
 
-#### 4. **Gestión de Contratos** (`contratos/`)
-- Creación y seguimiento de contratos
-- Estados: vigente, vencido, rescindido
-- Control de montos y fechas
+### 🔹 MÓDULO 2: GESTIÓN COMERCIAL
+**Propósito:** Manejo de clientes, contratos y pedidos  
+**Apps incluidas:** `clientes`, `contratos`, `pedidos`  
 
-#### 5. **Gestión de Pedidos** (`pedidos/`)
-- Procesamiento de pedidos de clientes
-- Detalles de pedidos con múltiples tipos de items
-- Estados: pendiente, en proceso, entregado, cancelado
-- Cálculo automático de totales
+**Modelos principales:**
+- `Cliente` (base de clientes)  
+- `Contrato` (acuerdos comerciales)  
+- `Pedido`, `DetallePedido` (órdenes de compra)  
 
-#### 6. **Gestión de Inventario** (`inventario/`)
-- Control de stock en tiempo real
-- Alertas de stock mínimo
-- Ubicación de productos
-- Seguimiento de movimientos
+**Funcionalidades:**
+- Registro y gestión de clientes  
+- Creación y seguimiento de contratos  
+- Procesamiento de pedidos  
+- Estados de pedidos y contratos  
+- Cálculo automático de totales  
 
-#### 7. **Gestión de Materiales** (`materiales/`)
-- **Pintura y Acabados**: Colores, tipos, precios
-- **Materiales de Impresión**: Especificaciones técnicas
-- **Materiales Recordatorio**: Productos promocionales
-- **Software y Equipos**: Licencias y versiones
-- **Materiales de Pintura**: Insumos para producción
-- **Materiales de Diseño**: Herramientas creativas
-- **Productos Terminados**: Cuadros finalizados
-- **Varillas**: Materia prima principal
+---
 
-#### 8. **Gestión de Producción** (`produccion/`)
-- **Órdenes de Producción**: Planificación de trabajos
-- **Varillas**: Materia prima con especificaciones
-- **Cuadros**: Productos en proceso y terminados
-- **Detalles de Órdenes**: Seguimiento de producción
-- **Movimientos de Inventario**: Entradas, salidas, ajustes
+### 🔹 MÓDULO 3: GESTIÓN DE INVENTARIO Y MATERIALES
+**Propósito:** Control de stock y catálogo de productos  
+**Apps incluidas:** `inventario`, `materiales`  
 
-#### 9. **Agenda** (`agenda/`)
-- Gestión de citas y eventos
-- Estados: pendiente, confirmada, completada, cancelada
-- Asignación por usuario y tenant
+**Modelos principales:**
+- `Inventario` (control general de stock)  
+- `PinturaAcabado`, `MaterialImpresion`, `MaterialRecordatorio`  
+- `SoftwareEquipo`, `MaterialPintura`, `MaterialDiseno`  
+- `ProductoTerminado`, `Varilla`  
 
-## Estructura de la Base de Datos
+**Funcionalidades:**
+- Control de stock en tiempo real  
+- Gestión de materiales por categorías  
+- Alertas de stock mínimo  
+- Ubicación de productos  
+- Seguimiento de movimientos  
 
-### Tablas Principales
+---
 
-#### Gestión Multi-tenant
-- `Tenant`: Información de empresas cliente
-- `users`: Sistema de usuarios personalizado
-- `auth_group`, `auth_permission`: Roles y permisos
+### 🔹 MÓDULO 4: GESTIÓN DE PRODUCCIÓN Y OPERACIONES
+**Propósito:** Planificación de producción y operaciones diarias  
+**Apps incluidas:** `produccion`, `agenda`  
 
-#### Gestión Comercial
-- `Cliente`: Base de datos de clientes
-- `Contrato`: Contratos y acuerdos
-- `Pedido`, `DetallePedido`: Órdenes de compra
+**Modelos principales:**
+- `OrdenProduccion`, `DetalleOrden`  
+- `Cuadro`, `Varilla` (producción)  
+- `MovimientoInventario`  
+- `Agenda` (citas y eventos)  
 
-#### Gestión de Inventario
-- `Inventario`: Control general de stock
-- `PinturaAcabado`: Productos de acabado
-- `MaterialImpresion`: Materiales de impresión
-- `MaterialRecordatorio`: Productos promocionales
-- `SoftwareEquipo`: Licencias y equipos
-- `MaterialPintura`: Insumos de pintura
-- `MaterialDiseno`: Herramientas de diseño
-- `ProductoTerminado`: Cuadros finalizados
-- `Varilla`: Materia prima principal
+**Funcionalidades:**
+- Planificación de órdenes de producción  
+- Seguimiento de productos en proceso  
+- Gestión de agenda y citas  
+- Control de movimientos de inventario  
+- Estados de producción  
 
-#### Gestión de Producción
-- `OrdenProduccion`: Órdenes de trabajo
-- `DetalleOrden`: Detalles de producción
-- `Cuadro`: Productos en proceso
-- `MovimientoInventario`: Historial de movimientos
-- `MaterialVarilla`: Relación materiales-varillas
+---
 
-#### Gestión Operativa
-- `Agenda`: Citas y eventos
-- `DocumentTypes`: Tipos de documentos
-- `UsersVerificationCode`: Códigos de seguridad
+## 2️⃣ DEPENDENCIAS ENTRE MÓDULOS
 
-## Tecnologías Utilizadas
+### ⚠️ Dependencias críticas
+- **Módulo 1 (Core) → Todos los demás módulos**  
+  Todos los módulos dependen del sistema de tenants y usuarios.  
+  El campo `tenant_id` es requerido en todos los modelos.
 
-- **Backend**: Django 5.2.6
-- **Base de Datos**: MySQL
-- **API**: Django REST Framework 3.16.1
-- **Autenticación**: Sistema personalizado multi-tenant
-- **Arquitectura**: Multi-tenant con aislamiento por tenant_id
+### 🔗 Dependencias funcionales
+- **Módulo 2 (Comercial) → Módulo 3 (Inventario)**  
+  - Los pedidos requieren validación de stock disponible  
+  - Los contratos pueden referenciar productos del inventario  
 
-## Configuración del Proyecto
+- **Módulo 4 (Producción) → Módulo 3 (Inventario)**  
+  - Las órdenes de producción consumen materiales del inventario  
+  - Los productos terminados se registran en inventario  
 
-### Estructura de Directorios
+### 💡 Buenas prácticas para minimizar dependencias
+- Interfaces bien definidas: Cada módulo expone APIs claras  
+- Eventos asincrónicos: Usar signals de Django para comunicación  
+- Servicios compartidos: Crear capa de servicios para lógica común  
+- Abstracción de datos: Usar DTOs para intercambio de información  
 
+---
+
+## 3️⃣ INTEGRACIÓN AL PROYECTO BASE
+
+### 📂 Estructura de carpetas recomendada
+```text
 av1-orginal/
-    ├── config/ # Configuración principal de Django
-    ├── agenda/ # Módulo de agenda y citas
-    ├── clientes/ # Gestión de clientes
-    ├── contratos/ # Gestión de contratos
-    ├── inventario/ # Control de inventario
-    ├── materiales/ # Gestión de materiales
-    ├── pedidos/ # Gestión de pedidos
-    ├── produccion/ # Gestión de producción
-    ├── tenants/ # Gestión multi-tenant
-    ├── usuarios/ # Sistema de usuarios
-    └── venv/ # Entorno virtual
+├── config/ # Configuración base (existente)
+├── core/ # Módulo 1: Core & Authentication
+│   ├── tenants/
+│   ├── usuarios/
+│   └── shared/ # Servicios compartidos
+├── commercial/ # Módulo 2: Gestión Comercial
+│   ├── clientes/
+│   ├── contratos/
+│   └── pedidos/
+├── inventory/ # Módulo 3: Inventario y Materiales
+│   ├── inventario/
+│   ├── materiales/
+│   └── shared/ # Servicios de inventario
+├── operations/ # Módulo 4: Producción y Operaciones
+│   ├── produccion/
+│   ├── agenda/
+│   └── shared/ # Servicios de producción
+└── shared/ # Utilidades globales
+    ├── middleware/
+    ├── permissions/
+    └── utils/
 
 
+```
 
-### Configuración de Django
-- **DEBUG**: Habilitado para desarrollo
-- **Base de Datos**: SQLite3
-- **Idioma**: Inglés (configurable)
-- **Zona Horaria**: UTC
-- **Aplicaciones**: Solo Django core (las apps personalizadas no están registradas aún)
 
-## Características Técnicas
+## 4️⃣ ORIENTACIÓN PARA DESARROLLO EN PARALELO
 
-### Modelos de Datos
-- **Aislamiento Multi-tenant**: Todos los modelos incluyen `tenant_id`
-- **Auditoría**: Campos `created_at` y `updated_at` en todos los modelos
-- **Estados**: Sistemas de estados para control de flujo
-- **Relaciones**: Referencias por ID para flexibilidad
+### 🛠️ Gestión de migraciones
+- Migraciones independientes por módulo.  
+- Prefijos en nombres: `0001_initial_core`, `0001_initial_commercial`.  
+- **Orden de migración:**
+  1. Core & Authentication (Módulo 1)  
+  2. Inventario y Materiales (Módulo 3)  
+  3. Gestión Comercial (Módulo 2)  
+  4. Producción y Operaciones (Módulo 4)  
 
-### Seguridad
-- **Aislamiento de Datos**: Separación completa por tenant
-- **Autenticación Personalizada**: Sistema propio de usuarios
-- **Permisos**: Sistema de grupos y permisos granular
-- **Verificación**: Códigos de verificación con intentos limitados
+### 🗄️ Estrategia de base de datos
+- Base de datos única con aislamiento por `tenant_id`.  
+- Índices optimizados por módulo.  
+- Constraints de integridad referencial.  
 
-### Escalabilidad
-- **Arquitectura Multi-tenant**: Soporte para múltiples empresas
-- **Base de Datos Optimizada**: Índices y relaciones eficientes
-- **Modularidad**: Aplicaciones independientes y reutilizables
+### 📚 Documentación por módulo
+- **README.md específico:** propósito, modelos, APIs, dependencias, guía de instalación.  
+- **Documentación técnica:** diagramas, flujos de trabajo, casos de uso, configuración.  
+- **Documentación de APIs:** endpoints, parámetros, ejemplos, códigos de error.  
 
-## Estado del Proyecto
+---
 
-### ✅ Completado
-- Estructura base del proyecto Django
-- Modelos de datos completos
-- Arquitectura multi-tenant
-- Sistema de usuarios personalizado
-- Gestión de inventario y materiales
-- Sistema de producción
-- Gestión comercial (clientes, contratos, pedidos)
+## 5️⃣ NOTAS ADICIONALES
 
-### �� Pendiente
-- Registro de aplicaciones en `settings.py`
-- Configuración de URLs
-- Vistas y APIs
-- Interfaz de usuario
-- Migraciones de base de datos
-- Configuración de producción
+### 🚀 Recomendaciones de escalabilidad
+- Arquitectura de microservicios futura: cada módulo puede convertirse en microservicio independiente.  
+- APIs REST bien definidas facilitan la migración.  
+- Base de datos puede particionarse por módulo.  
 
-## Instalación y Configuración
+### ⚡ Optimización de rendimiento
+- Cache por módulo usando Redis.  
+- Índices de base de datos optimizados.  
+- Paginación en todas las listas.  
+- Lazy loading de relaciones.  
 
-### Requisitos
-- Python 3.10+
-- Django 5.2.6
-- Django REST Framework 3.16.1
+### 📊 Monitoreo y logging
+- Logs estructurados por módulo.  
+- Métricas de rendimiento independientes.  
+- Alertas específicas por funcionalidad.  
 
-### Pasos de Instalación
-1. Clonar el repositorio
-2. Crear entorno virtual: `python -m venv venv`
-3. Activar entorno virtual
-4. Instalar dependencias: `pip install -r requirements.txt`
-5. Configurar base de datos
-6. Ejecutar migraciones: `python manage.py migrate`
-7. Crear superusuario: `python manage.py createsuperuser`
-8. Ejecutar servidor: `python manage.py runserver`
+### 🧪 Estrategias de Testing
+- **Testing independiente:** tests unitarios por módulo, mocks, DB de testing separada.  
+- **Testing de integración:** tests de APIs entre módulos, validación de flujos completos, tests de regresión automatizados.  
+- **Testing de carga:** pruebas de rendimiento por módulo, simulación multi-tenant, optimización basada en resultados.  
 
-## Uso del Sistema
+### 🔧 Estrategias de mantenimiento
+- **Versionado de módulos:** versionado semántico independiente, compatibilidad hacia atrás, deprecación gradual.  
+- **Despliegue independiente:** CI/CD por módulo, rollback granular, despliegue sin downtime.  
+- **Monitoreo de salud:** health checks por módulo, alertas proactivas, métricas de negocio.
 
-### Gestión Multi-tenant
-1. Crear tenant (empresa cliente)
-2. Configurar subdominio único
-3. Asignar usuarios al tenant
-4. Configurar permisos y roles
-
-### Flujo de Trabajo
-1. **Registro de Clientes**: Crear y gestionar base de clientes
-2. **Gestión de Contratos**: Establecer acuerdos comerciales
-3. **Procesamiento de Pedidos**: Recibir y procesar órdenes
-4. **Planificación de Producción**: Crear órdenes de trabajo
-5. **Control de Inventario**: Gestionar stock y materiales
-6. **Seguimiento de Producción**: Monitorear avance de trabajos
-7. **Entrega y Facturación**: Completar ciclo comercial
